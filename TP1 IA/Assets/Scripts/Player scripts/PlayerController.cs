@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = new Vector3 (h, 0, v);
         
         playerModel.Move(dir.normalized);
-        playerModel.Look(dir.normalized);
+
+        if (h  != 0 || v != 0)
+        {
+            playerModel.Look(dir.normalized);
+        } 
     }
 }
