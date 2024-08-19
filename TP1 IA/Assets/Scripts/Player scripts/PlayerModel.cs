@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : MonoBehaviour
+public class PlayerModel : MonoBehaviour, IMove
 {
     //M -> Model: todo lo que el personaje hace, si dispara, salta. NO LO LLAMA ÉL
     //V -> View: representación física de los comportamientos. Un animator sería similar a esto.

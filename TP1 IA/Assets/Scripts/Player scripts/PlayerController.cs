@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    IMove playerModel;
+
+    private void Start()
     {
-        
+        playerModel = GetComponent<IMove>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
+        var h = Input.GetAxis("Horizontal");
+        var v = Input.GetAxis("Vertical");
         
+        Vector3 dir = new Vector3 (h, 0, v);
+        
+        playerModel.Move(dir.normalized);
+        playerModel.Look(dir.normalized);
     }
 }
