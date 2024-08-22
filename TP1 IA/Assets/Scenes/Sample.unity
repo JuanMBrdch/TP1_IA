@@ -453,5 +453,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
+    - target: {fileID: 1802166106552855496, guid: 3f5b033f7ddc86247b302361e772d7f0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f5b033f7ddc86247b302361e772d7f0, type: 3}
