@@ -14,5 +14,6 @@ public class ActionTree : ITreeNode
 
     public void Execute()
     {
+        action();
     }
 }
