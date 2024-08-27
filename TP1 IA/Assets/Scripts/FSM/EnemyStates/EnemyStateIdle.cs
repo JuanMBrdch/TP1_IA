@@ -19,7 +19,10 @@ public class EnemyStateIdle : State<EnemyStates>
         base.Execute();
         if (_lineOfSight.CheckRange(_target) && _lineOfSight.CheckAngle(_target) && _lineOfSight.InView(_target))
         {
+            //Debug.Log("Can see player");
             _fsm.Transition(EnemyStates.alert);
         }
+
+        //Debug.Log("idle");
     }
 }
