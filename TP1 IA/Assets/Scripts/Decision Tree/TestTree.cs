@@ -18,7 +18,6 @@ public class TestTree : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            print("lol");
             root.Execute();
         }    
     }

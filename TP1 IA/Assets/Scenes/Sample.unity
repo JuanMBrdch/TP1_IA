@@ -334,8 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets: 10
-  enemySpotted: 0
-  hasLife: 0
+  enemySpotted: 1
+  hasLife: 10
 --- !u!4 &1184662912
 Transform:
   m_ObjectHideFlags: 0
