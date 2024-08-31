@@ -933,7 +933,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6b4bc955d2730f543aab0bf60d90d418, type: 2}
+  - {fileID: 2100000, guid: 33a010b2a749d0049964d13955dc63cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1399,6 +1399,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1786474946}
   m_CullTransparentMesh: 1
+--- !u!1 &1863657632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c5617b2178a643f428e2b29e29e64a86, type: 3}
+  m_PrefabInstance: {fileID: 1205888869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1863657635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863657632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7002c645dbe93cd4eb6452214fb2d482, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2063053602
 GameObject:
   m_ObjectHideFlags: 0

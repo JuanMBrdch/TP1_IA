@@ -15,25 +15,27 @@ public class UIController : MonoBehaviour
 
     public void Pause()
     {
-        pausePanel.SetActive(true);
-        pauseButton.SetActive(false);
+        if (pausePanel) pausePanel.SetActive(true);
+        if (pauseButton) pauseButton.SetActive(false);
         Time.timeScale = 0;
     }
 
     public void UnPause()
     {
-        pausePanel.SetActive(false);
-        pauseButton.SetActive(true);
+        if (pausePanel) pausePanel.SetActive(false);
+        if(pauseButton) pauseButton.SetActive(true);
         Time.timeScale = 1;
     }
 
     public void NewGame()
     {
+        UnPause();
         SceneManager.LoadScene(newGameScene);
     }
 
     public void GoToMainMenu()
     {
+        UnPause();
         SceneManager.LoadScene(mainMenuScene);
     }
 
