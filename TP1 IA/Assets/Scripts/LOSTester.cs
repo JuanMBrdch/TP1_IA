@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,11 +8,17 @@ public class LOSTester : MonoBehaviour
     public Transform _target;
     LOS _lineOfSight;
     FSM<EnemyStates> _fsm;
+    Cooldown _cooldown;
+    Action finishCooldown = delegate { };
+    
     // Start is called before the first frame update
     void Start()
     {
         _lineOfSight = GetComponent<LOS>();
         InitializeFSM();
+        finishCooldown += PrintMessage;
+        _cooldown = new Cooldown(10,finishCooldown);
+        
     }
 
     private void InitializeFSM()
@@ -36,6 +43,12 @@ public class LOSTester : MonoBehaviour
         //}
 
         _fsm.OnUpdate();
+        _cooldown.OnCoolDown();
 
+    }
+
+    void PrintMessage()
+    {
+        print("Cooldown Ended");
     }
 }

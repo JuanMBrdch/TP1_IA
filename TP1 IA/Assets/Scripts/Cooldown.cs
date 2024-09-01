@@ -33,6 +33,7 @@ public class Cooldown
         if (_currentTime <= 0)
         {
             OnFinishedCooldown();
+            Reset();
             return false;
         }
 
