@@ -36,7 +36,7 @@ public class RemyController : MonoBehaviour
         get => isJumping;
         set { 
             isJumping = value;
-            if(isJumping) anim.SetTrigger("IsJumping");
+            if(isJumping) anim.SetTrigger("DoJump");
         }
     }
 
@@ -100,7 +100,7 @@ public class RemyController : MonoBehaviour
         {
             life = 0;
             rb.velocity = Vector3.zero;
-            anim.SetTrigger("IsDying");
+            anim.SetTrigger("DoDie");
             return;
         }
 
