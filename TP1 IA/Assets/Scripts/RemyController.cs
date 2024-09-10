@@ -7,6 +7,8 @@ public class RemyController : MonoBehaviour
 {
     [Header("Parameters")]
     public float speed;
+    [SerializeField] float speedLimit = 6;
+    [SerializeField] int energyLimit = 2;
 
     [Header("References")]
     [SerializeField] Animator anim;
@@ -20,9 +22,12 @@ public class RemyController : MonoBehaviour
     bool isJumping;
     bool isGrounded;
 
+    public bool isProtected;
+
     float raycastDistance = 0.1f; // Distancia del Raycast
 
     int life;
+    int energy = 0;    
 
     public bool IsBreakDancing { 
         get => isBreakDancing; 
@@ -92,8 +97,11 @@ public class RemyController : MonoBehaviour
             rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
         }
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
+//****************Modified****************
+        if (Input.GetKeyDown(KeyCode.Return) && energy > 0) {
             IsBreakDancing = !IsBreakDancing;
+            energy--;
+            print("Dance");
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -130,4 +138,35 @@ public class RemyController : MonoBehaviour
 
         anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
     }
+
+    public void ChangeEnergy(int amount)
+    {
+        if ((energy + amount) <= energyLimit)
+        {
+            if ((energy + amount) >= 0)
+            {
+                energy += amount;                
+            }
+            else energy = 0;
+
+            print("Energy is now " + energy);
+        }
+        
+    }
+
+    public void ChangeSpeed(float amount)
+    {
+        if ((speed + amount) <= speedLimit)
+        {
+            if ((speed + amount) >= 0)
+            {
+                speed += amount;
+            }
+            else speed = 0;
+
+            print("Speed is now " + speed);
+        }
+        else speed = speedLimit;
+    }
+    
 }
