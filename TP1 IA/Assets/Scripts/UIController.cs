@@ -13,18 +13,42 @@ public class UIController : MonoBehaviour
     public GameObject pausePanel;
     public GameObject pauseButton;
 
+    bool isPaused;
+
+    private void Start()
+    {
+        isPaused = false;
+    }
+
     public void Pause()
     {
         if (pausePanel) pausePanel.SetActive(true);
         if (pauseButton) pauseButton.SetActive(false);
+        isPaused = true;
         Time.timeScale = 0;
     }
 
     public void UnPause()
     {
         if (pausePanel) pausePanel.SetActive(false);
-        if(pauseButton) pauseButton.SetActive(true);
+        if (pauseButton) pauseButton.SetActive(true);
+        isPaused = false;
         Time.timeScale = 1;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (isPaused)
+            {
+                UnPause();
+            } 
+            else
+            {
+                Pause();
+            }
+        }
     }
 
     public void NewGame()

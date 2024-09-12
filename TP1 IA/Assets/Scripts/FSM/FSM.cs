@@ -27,6 +27,16 @@ public class FSM<T>
         if (current != null)
             current.Execute();
     }
+    public void OnFixedUpdate()
+    {
+        if (current != null)
+            current.FixedExecute();
+    }
+    public void OnLateUpdate()
+    {
+        if (current != null)
+            current.LateExecute();
+    }
 
     public void OnExit()
     {

@@ -9,10 +9,9 @@ public class Item : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<RemyController>(out RemyController player))
+        if (other.TryGetComponent(out RemyController player))
         {
             OnCollected(player);           
         }
-        
     }
 }
