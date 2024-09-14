@@ -6,22 +6,28 @@ using UnityEngine.UIElements;
 
 public class AlienController : MonoBehaviour
 {
-    [Header("Target")]
-    [SerializeField] Transform target;
+    [Header("Target")] [SerializeField] Transform target;
 
-    [Header("Properties")]
-    [SerializeField] float speed;
+    [Header("Properties")] [SerializeField]
+    float speed;
+
     [SerializeField] float pursuitRadius;
 
-    [Header("References")]
-    [SerializeField] Animator anim;
+    [Header("References")] [SerializeField]
+    Animator anim;
+
+    [Header("Obstacle Avoidance")] public float radius;
+    public float angle;
+    public float personalArea;
+    public LayerMask obsMask;
+    ObstacleAvoidance _obs;
 
     Rigidbody rb;
     bool isRunningAway;
     bool isAttacking;
 
     public bool IsRunningAway
-    { 
+    {
         get => isRunningAway;
         set
         {
@@ -29,19 +35,22 @@ public class AlienController : MonoBehaviour
             anim.SetBool("IsRunningAway", isRunningAway);
         }
     }
-    public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
+
+    public bool IsAttacking
+    {
+        get => isAttacking;
+        set => isAttacking = value;
+    }
 
     public float HorizontalVelocityMagnitude
     {
-        get
-        {
-            return new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
-        }
+        get { return new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude; }
     }
 
     private void Awake()
     {
         AlienAnimController.FinishedAttackAction += FinishedAttackActionHandler;
+        _obs = new ObstacleAvoidance(transform, radius, angle, personalArea, obsMask);
     }
 
     private void OnDestroy()
@@ -54,14 +63,12 @@ public class AlienController : MonoBehaviour
         IsAttacking = false;
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         isRunningAway = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (target == null)
@@ -71,16 +78,19 @@ public class AlienController : MonoBehaviour
 
         if (targetDistance <= pursuitRadius && !IsRunningAway && !IsAttacking)
         {
-            transform.LookAt(new Vector3(target.position.x, 0, target.position.z));
-            rb.velocity = new Vector3(transform.forward.x, 0, transform.forward.z) * speed;
+            var dirToTarget = (target.position - transform.position).normalized; //aca deberia ir el pursuit/evade segun corresponda
+            dirToTarget.y = 0; //para no elevarlo/bajarlo
+            var dir = _obs.GetDir(dirToTarget).normalized; //solo da la direccion a la que moverse
+            rb.velocity = dir * speed;
+            transform.forward = dir; //hace verlo en la direccion en la que se va a mover
         }
-        else 
+        else
         {
             if (IsRunningAway)
             {
-                Vector3 fleeDirection = transform.position - (target.position - transform.position); // mirar para atrás
+                Vector3 fleeDirection = transform.position - (target.position - transform.position); // mirar para atrÃ¡s
                 transform.LookAt(new Vector3(fleeDirection.x, 0, fleeDirection.z));
-                rb.velocity = new Vector3(transform.forward.x, 0, transform.forward.z) * speed;
+                rb.velocity = _obs.GetDir(transform.forward) * speed;
             }
             else
             {

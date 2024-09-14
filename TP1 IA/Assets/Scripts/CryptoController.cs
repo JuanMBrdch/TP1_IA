@@ -14,6 +14,17 @@ public class CryptoController : MonoBehaviour
     [Header("References")]
     [SerializeField] Animator anim;
 
+    [Header("Obstacle Avoidance")]
+    public float radius;
+    public float angle;
+    public float personalArea;
+    public LayerMask obsMask;
+    ObstacleAvoidance _obs;
+    
+    // izi: en el move pasarle la direccion del OA para moverse siempre con esto, problema: siempre lo usa
+    // hard: pasarle el OA a los estados, y de ahi usar la direccion en el move (referenciarlos y pasarlos por constructor)
+    // recomm: rotacion del jugador suave
+    
     Rigidbody rb;
     bool isClapping;
     bool isAttacking;
@@ -40,6 +51,7 @@ public class CryptoController : MonoBehaviour
     private void Awake()
     {
         CryptoAnimController.FinishedAttackAction += FinishedAttackActionHandler;
+        _obs = new ObstacleAvoidance(transform, radius, angle, personalArea, obsMask);
     }
 
     private void OnDestroy()
