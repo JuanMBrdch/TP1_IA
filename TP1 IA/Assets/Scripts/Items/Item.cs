@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    protected Action<RemyController> OnCollected;
+    protected Action<RemyModel> OnCollected;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out RemyController player))
+        if (other.TryGetComponent(out RemyModel player))
         {
             OnCollected(player);            
         }

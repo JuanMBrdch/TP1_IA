@@ -14,7 +14,7 @@ public class Shield : Item
         OnCollected += ActivateShield;
     }
 
-    private void ActivateShield(RemyController player)
+    private void ActivateShield(RemyModel player)
     {
         player.IsProtected = true;
         Destroy(this.gameObject);

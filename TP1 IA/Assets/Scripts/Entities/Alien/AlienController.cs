@@ -14,7 +14,7 @@ public class AlienController : Enemy
         set
         {
             isRunningAway = value;
-            anim.SetBool("IsRunningAway", isRunningAway);
+            //anim.SetBool("IsRunningAway", isRunningAway);
         }
     }
 
@@ -42,7 +42,7 @@ public class AlienController : Enemy
         if (target == null)
             return;
 
-        anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
+        //anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
@@ -52,7 +52,7 @@ public class AlienController : Enemy
         if (Input.GetKeyDown(KeyCode.Keypad2))
         {
             IsAttacking = true;
-            anim.SetTrigger("DoAttack");
+            //anim.SetTrigger("DoAttack");
         }
     }
     /*

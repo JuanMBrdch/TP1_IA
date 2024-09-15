@@ -8,18 +8,7 @@ public abstract class Entity : MonoBehaviour, IMove
     public float speed;
     public float rotationSpeed = 6;
 
-    [Header("References")]
-    [SerializeField] protected Animator anim;
-
     protected Rigidbody rb;
-
-    protected float HorizontalVelocityMagnitude
-    {
-        get
-        {
-            return new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude;
-        }
-    }
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -29,7 +18,6 @@ public abstract class Entity : MonoBehaviour, IMove
 
     public virtual void Move(Vector3 dir)
     {
-        //dir = dir.normalized;
         dir *= speed;
         dir.y = rb.velocity.y;
         rb.velocity = dir;

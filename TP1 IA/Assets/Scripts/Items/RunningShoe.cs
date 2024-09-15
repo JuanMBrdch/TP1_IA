@@ -10,7 +10,7 @@ public class RunningShoe : Item
         OnCollected += IncreaseSpeed;
     }
 
-    private void IncreaseSpeed(RemyController player)
+    private void IncreaseSpeed(RemyModel player)
     {
         player.ChangeSpeed(Mathf.Abs(speedIncrease));
         Destroy(this.gameObject);
