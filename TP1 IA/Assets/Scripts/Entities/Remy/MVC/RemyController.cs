@@ -23,7 +23,7 @@ public class RemyController : MonoBehaviour
         _breakDancing = GetComponent<IBreakDancing>();
         _dead = GetComponent<IDead>();
 
-        fsm = new FSM<RemyStates>();
+        fsm = new();
 
         var idle = new RemyStateIdle(fsm, _move, _jump, _breakDancing, _dead);
         var move = new RemyStateMove(fsm, _move, _jump, _breakDancing, _dead);
@@ -49,8 +49,6 @@ public class RemyController : MonoBehaviour
 
         fsm.SetInitial(idle);
     }
-
-    // Update is called once per frame
     void Update()
     {
         fsm.OnUpdate();

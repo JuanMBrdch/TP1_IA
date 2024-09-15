@@ -30,8 +30,9 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public static Action DieAction;
     public static Action JumpAction;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         RemyAnimController.FinishedJumpAction += FinishedJumpActionHandler;
     }
 

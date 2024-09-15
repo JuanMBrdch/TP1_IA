@@ -23,6 +23,11 @@ public class AlienController : Enemy
         AlienAnimController.FinishedAttackAction += FinishedAttackActionHandler;
     }
 
+    protected override void ConcreteAttackActionHandler()
+    {
+
+    }
+
     override protected void OnDestroy()
     {
         AlienAnimController.FinishedAttackAction -= FinishedAttackActionHandler;
@@ -39,9 +44,9 @@ public class AlienController : Enemy
     // Update is called once per frame
     void Update()
     {
-        if (target == null)
+        /*if (target == null)
             return;
-
+        */
         //anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
@@ -92,10 +97,4 @@ public class AlienController : Enemy
         }
     }
     */
-#if UNITY_EDITOR
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireSphere(transform.position, pursuitRadius);
-    }
-#endif
 }

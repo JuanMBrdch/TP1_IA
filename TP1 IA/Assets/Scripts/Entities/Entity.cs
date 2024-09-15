@@ -11,9 +11,13 @@ public abstract class Entity : MonoBehaviour, IMove
     protected Rigidbody rb;
 
     // Start is called before the first frame update
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
+    }
+    protected virtual void Start()
+    {
+        // rb = GetComponent<Rigidbody>();
     }
 
     public virtual void Move(Vector3 dir)

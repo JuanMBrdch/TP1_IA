@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LOS : MonoBehaviour
+public class LineOfSight : MonoBehaviour
 {
     [SerializeField] private float range;
     [SerializeField] private Transform pov;
