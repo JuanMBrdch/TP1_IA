@@ -11,7 +11,10 @@ public class Item : MonoBehaviour
     {
         if (other.TryGetComponent(out RemyModel player))
         {
-            OnCollected(player);           
+            OnCollected(player);            
         }
     }
+
+    
+    
 }

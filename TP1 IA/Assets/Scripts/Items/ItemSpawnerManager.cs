@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class ItemSpawnerManager : MonoBehaviour
 {
-    [SerializeField] Item[] itemsToSpawn;
-    [SerializeField] List<float> itemWeight;
-    private Dictionary<Item, float> itemDictionary = new Dictionary<Item, float>();
+    [SerializeField] List<ItemInfo> itemsToSpawn;
+    //[SerializeField] List<float> itemWeight;
+    //private Dictionary<ItemInfo, float> itemDictionary = new Dictionary<ItemInfo, float>();
     [SerializeField] Transform[] spawnPoints;
     private float totalWeight = 0;
 
     private void Awake()
     {
-        itemWeight.Sort();
+        itemsToSpawn.Sort((a, b) => a.itemWeight.CompareTo(b.itemWeight));
 
-        foreach(float weight in itemWeight)
+        foreach(ItemInfo item in itemsToSpawn)
         {
-            totalWeight += weight;
+            totalWeight += item.itemWeight;
         }
 
         //Cargar Diccionario
-        for(int i = 0; i < itemsToSpawn.Length; i++)
-        {
-            itemDictionary.Add(itemsToSpawn[i],itemWeight[i]);
-            //print(itemsToSpawn[i].gameObject.name);
-        }
+        //for(int i = 0; i < itemsToSpawn.Length; i++)
+        //{
+        //    itemDictionary.Add(itemsToSpawn[i],itemWeight[i]);
+        //    //print(itemsToSpawn[i].gameObject.name);
+        //}
 
         
 
@@ -34,11 +34,13 @@ public class ItemSpawnerManager : MonoBehaviour
     {
         foreach(Transform location in spawnPoints)
         {
-            GameObject temp = RollItem().gameObject;
+            var temp = RollItem();
+
+            
 
             if (temp != null)
             {
-                Instantiate(temp, location);
+                Instantiate(temp.gameObject, location);
             }
             
         }
@@ -46,15 +48,15 @@ public class ItemSpawnerManager : MonoBehaviour
 
     private Item RollItem()
     {
-        float weight = Random.Range(0, itemWeight[itemWeight.Count-1]);
+        float weight = Random.Range(0, totalWeight);
         print(weight);
-        foreach (var item in itemDictionary)
+        foreach (var item in itemsToSpawn)
         {
-            weight -= item.Value;
+            weight -= item.itemWeight;
 
-            if (weight <= 0)
+            if (weight <= 0 && item.item != null)
             {
-                return item.Key;
+                return item.item;
             }
         }
 
