@@ -155,7 +155,7 @@ public class RemyController : Entity, IJump, IBreakDancing, IDead
             life = 0;
         }
 
-        print(fsm.GetCurrent);
+        //print(fsm.GetCurrent);
 
         anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
     }

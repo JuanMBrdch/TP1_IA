@@ -3,10 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public class ItemInfo
+[CreateAssetMenu(fileName = "New Item Info", menuName = "Data/Item")]
+public class ItemInfo : ScriptableObject
 {
-    public Item item;
-    public float weight;
+    [SerializeField] private Item _item;
+    public Item item { get { return _item; } }
+
+    [SerializeField] private float _weight;
+
+    public float itemWeight { get { return _weight; } }
 
 }

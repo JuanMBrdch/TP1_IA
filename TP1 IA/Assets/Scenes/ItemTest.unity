@@ -154,6 +154,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &173101293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7394951385911958602, guid: 57b32677711546c47bb20deb12c43847, type: 3}
+  m_PrefabInstance: {fileID: 7394951384793252238}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1299324357}
+  - component: {fileID: 1299324358}
+  m_Layer: 0
+  m_Name: Empty
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &370538095 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3144932089098144701, guid: 0b4952d254e5d6d4ab5583018cb96ece, type: 3}
@@ -436,11 +453,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1299324357 stripped
+--- !u!4 &1299324357
 Transform:
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 7394951385911958603, guid: 57b32677711546c47bb20deb12c43847, type: 3}
   m_PrefabInstance: {fileID: 7394951384793252238}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173101293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1746120367}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1299324358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 7394951385911958600, guid: 57b32677711546c47bb20deb12c43847, type: 3}
+  m_PrefabInstance: {fileID: 7394951384793252238}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 173101293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484ef0003da709f468bc7c654e5f5b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1350796642
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,19 +735,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemsToSpawn:
-  - {fileID: 7394951385911958600, guid: 57b32677711546c47bb20deb12c43847, type: 3}
-  - {fileID: 5832786549418732830, guid: 577d00fe6ff16b846a7726af8309d473, type: 3}
-  - {fileID: 704854895311739863, guid: 1eec8a328165e3941a470ecbaa9f683b, type: 3}
-  - {fileID: 3144932089098144674, guid: 0b4952d254e5d6d4ab5583018cb96ece, type: 3}
-  - {fileID: 373935604466417427, guid: 4f82be835365ad64cb7b3a4a1843d992, type: 3}
-  - {fileID: 167875769779588568, guid: 95b59ac9591f62f49a43d3e718fd9551, type: 3}
-  itemWeight:
-  - 50
-  - 60
-  - 70
-  - 100
-  - 120
-  - 150
+  - {fileID: 11400000, guid: 9b803647c6764804bac5ad4de8e109ea, type: 2}
+  - {fileID: 11400000, guid: 85cfe2985bdda4946ba7be2eda0b3017, type: 2}
+  - {fileID: 11400000, guid: aefa5890baf20c84ca4812d8b4f90a0c, type: 2}
+  - {fileID: 11400000, guid: 55a66e1e5b7c9e34788471ac9826efa0, type: 2}
+  - {fileID: 11400000, guid: 75b6548f5ae38434a9435794547893b7, type: 2}
+  - {fileID: 11400000, guid: fe4aff67b0f760048bf968a9c494efd1, type: 2}
   spawnPoints:
   - {fileID: 1095961204}
   - {fileID: 105785805}
