@@ -29,7 +29,6 @@ public class RemyStateMove : State<RemyStates>
 
         bool isInputACtive = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
 
-
         if (h == 0 && v == 0)
         {
             fsm.Transition(RemyStates.Idle);
@@ -51,7 +50,6 @@ public class RemyStateMove : State<RemyStates>
 
             if (isInputACtive)
                 move.Look(dir);
-
         }
 
         if (Input.GetKey(KeyCode.Space) && jump.CanJump())

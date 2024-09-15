@@ -12,7 +12,7 @@ public class CryptoController : Enemy
         set
         {
             isClapping = value;
-            anim.SetBool("IsClapping", isClapping);
+            // anim.SetBool("IsClapping", isClapping);
         }
     }
 
@@ -39,7 +39,7 @@ public class CryptoController : Enemy
         if (target == null)
             return;
 
-        anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
+        // anim.SetFloat("Velocity", HorizontalVelocityMagnitude);
 
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
@@ -49,7 +49,7 @@ public class CryptoController : Enemy
         if (Input.GetKeyDown(KeyCode.Keypad5))
         {
             IsAttacking = true;
-            anim.SetTrigger("DoAttack");
+            // anim.SetTrigger("DoAttack");
         }
     }
 

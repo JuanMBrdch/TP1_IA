@@ -4720,6 +4720,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4384882287898990675, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
+      propertyPath: lifeLimit
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4384882287898990675, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
