@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CryptoModel : Enemy, IClapping, IAttack
+public class CryptoModel : Enemy, IClapping
 {
     [SerializeField] GameObject fireball;
     [SerializeField] Transform attackSpawnPoint;
+    [SerializeField] int clappingDurationTime;
 
     bool isClapping;
 
@@ -16,6 +17,7 @@ public class CryptoModel : Enemy, IClapping, IAttack
         get => isClapping;
         set => isClapping = value;
     }
+    public int ClappingDuration { get => clappingDurationTime; set => clappingDurationTime = value; }
 
     protected override void Start()
     {

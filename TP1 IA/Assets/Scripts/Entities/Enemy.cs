@@ -6,10 +6,15 @@ public abstract class Enemy : Entity, IPatrol, IAttack
 {
     [Header("References")]
     [SerializeField] List<Transform> waypoints;
+    [SerializeField] float attackRange;
+    [SerializeField] float attackCooldown;
 
     bool isAttacking;
+
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public List<Transform> Waypoints { get => waypoints; }
+    public float AttackRange { get => attackRange; set => attackRange = value; }
+    public float AttackCooldown { get => attackCooldown; set => attackCooldown = value; }
 
     protected abstract void OnDestroy();
     protected void FinishedAttackActionHandler()

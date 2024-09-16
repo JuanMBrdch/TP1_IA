@@ -255,8 +255,11 @@ MonoBehaviour:
   speed: 8
   rotationSpeed: 6
   waypoints: []
+  attackRange: 5
+  attackCooldown: 3
   fireball: {fileID: 8951887438698461726, guid: 20e321679400f4c4ba132d4426fae43c, type: 3}
   attackSpawnPoint: {fileID: 8584153554473852929}
+  clappingDurationTime: 5
 --- !u!114 &6757967575222936123
 MonoBehaviour:
   m_ObjectHideFlags: 0

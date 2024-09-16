@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class CryptoView : MonoBehaviour
 {
@@ -8,11 +9,13 @@ public class CryptoView : MonoBehaviour
     Rigidbody rb;
 
     IClapping _clapping;
+    CryptoModel cryptoModel;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         _clapping = GetComponent<IClapping>();
+        cryptoModel = GetComponent<CryptoModel>();
 
         CryptoModel.AttackAction += AttackActionHandler;
     }
@@ -31,5 +34,14 @@ public class CryptoView : MonoBehaviour
     void AttackActionHandler()
     {
         anim.SetTrigger("DoAttack");
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (cryptoModel != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, cryptoModel.AttackRange);
+        }
     }
 }

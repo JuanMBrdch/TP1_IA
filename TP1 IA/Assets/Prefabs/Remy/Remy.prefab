@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4384882287898990675}
   - component: {fileID: 4404130192583864881}
   - component: {fileID: 4634753274601197218}
-  m_Layer: 9
+  m_Layer: 3
   m_Name: Remy
   m_TagString: Player
   m_Icon: {fileID: 0}

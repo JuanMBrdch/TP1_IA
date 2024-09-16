@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class FireballController : MonoBehaviour
@@ -29,7 +26,11 @@ public class FireballController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // TODO: DO Damage to player
+        if (other.tag == "Player") {
+            RemyModel remyModel = other.GetComponent<RemyModel>();
+            remyModel.ChangeLife(-1);
+        }
+
         Destroy(this.gameObject);
     }
 }
