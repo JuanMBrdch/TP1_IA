@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out RemyModel player))
-        {
+        {           
             OnCollected(player);            
         }
     }

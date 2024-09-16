@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Shield : Item
 {    
-    private void Awake()
+    private void Start()
     {
         OnCollected += ActivateShield;
     }
