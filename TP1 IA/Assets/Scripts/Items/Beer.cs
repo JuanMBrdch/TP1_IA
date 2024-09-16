@@ -10,7 +10,7 @@ public class Beer : Item
         OnCollected += DecreaseSpeed;
     }
 
-    private void DecreaseSpeed(RemyController player)
+    private void DecreaseSpeed(RemyModel player)
     {
         player.ChangeSpeed(Mathf.Abs(speedDecrease)*-1);
         Destroy(this.gameObject);

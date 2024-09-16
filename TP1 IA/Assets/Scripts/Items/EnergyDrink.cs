@@ -10,7 +10,7 @@ public class EnergyDrink : Item
         OnCollected += IncreaseEnergy;
     }
 
-    private void IncreaseEnergy(RemyController player)
+    private void IncreaseEnergy(RemyModel player)
     {
         player.ChangeEnergy(Mathf.Abs(energyToIncrease));
         Destroy(this.gameObject);

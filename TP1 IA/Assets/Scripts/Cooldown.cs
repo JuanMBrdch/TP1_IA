@@ -5,43 +5,57 @@ using UnityEngine;
 
 public class Cooldown
 {
-    private float _cooldownTime;
-    private float _currentTime;
-    Action OnFinishedCooldown;
-    public Cooldown(float time, Action finished = null, bool startOnCooldown = false)
+    float _initTimer;
+    Action _onFinishCooldown;
+
+    bool _executedFinishAction;
+
+    float _lastInterval;
+
+    public float TimeElapsed
     {
-        _cooldownTime = time;
-        OnFinishedCooldown = finished;
-        if (startOnCooldown)
+        get
         {
-            Reset();
-        }
-        else
-        {
-            _currentTime = 0;
+            return Time.realtimeSinceStartup - _lastInterval;
         }
     }
 
-    public bool OnCoolDown()
+    public Cooldown(float timer = 1, Action onFinishCooldown = null)
     {
-        if (_currentTime > 0)
-        {
-           _currentTime -= Time.deltaTime;
-            return true;
-        }        
-        
-        if (_currentTime <= 0)
-        {
-            OnFinishedCooldown();
-            Reset();
-            return false;
-        }
-
-        return true;
+        _initTimer = timer;
+        _onFinishCooldown = onFinishCooldown;
+        _executedFinishAction = true;
+        _lastInterval = -1;
     }
-
-    public void Reset()
+    public void ResetCooldown()
     {
-        _currentTime = _cooldownTime;
+        _executedFinishAction = false;
+        _lastInterval = Time.realtimeSinceStartup;
+    }
+    public bool IsCooldown()
+    {
+        // IsCooldown devuelve true mientras el tiempo siga corriendo.
+        // Cuando el timer se agota, IsCoolDown devuelve false.
+        RunCooldown();
+        return _lastInterval != -1 && TimeElapsed < _initTimer;
+    }
+    public void RunCooldown()
+    {
+        if (TimeElapsed >= _initTimer && _onFinishCooldown != null && !_executedFinishAction)
+        {
+            _onFinishCooldown();
+            _executedFinishAction = true;
+        }
+    }
+    public Action OnFinishCooldown
+    {
+        get
+        {
+            return _onFinishCooldown;
+        }
+        set
+        {
+            _onFinishCooldown = value;
+        }
     }
 }

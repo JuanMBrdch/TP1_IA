@@ -10,7 +10,7 @@ public class EnergyDebuff : Item
         OnCollected += DecreaseEnergy;
     }
 
-    private void DecreaseEnergy(RemyController player)
+    private void DecreaseEnergy(RemyModel player)
     {
         player.ChangeEnergy(Mathf.Abs(energyToDecrease) * -1);
         Destroy(this.gameObject);

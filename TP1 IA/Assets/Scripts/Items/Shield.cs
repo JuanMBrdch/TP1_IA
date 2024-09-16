@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shield : Item
-{    private void Start()
+{    
+    private void Awake()
     {
         OnCollected += ActivateShield;
     }
 
-    private void ActivateShield(RemyController player)
+    private void OnDestroy()
     {
-        player.isProtected = true;
+        OnCollected += ActivateShield;
+    }
+
+    private void ActivateShield(RemyModel player)
+    {
+        player.IsProtected = true;
         Destroy(this.gameObject);
     }
 }

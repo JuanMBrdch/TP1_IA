@@ -16,6 +16,16 @@ public class State<T> : IState<T>
 
     }
 
+    public virtual void FixedExecute()
+    {
+
+    }
+
+    public virtual void LateExecute()
+    {
+
+    }
+
     public virtual void Exit()
     {
 
@@ -44,7 +54,7 @@ public class State<T> : IState<T>
     {
         foreach (var item in transitions)
         {
-            if(state == item.Value)
+            if (state == item.Value)
             {
                 transitions.Remove(item.Key);
                 break;
