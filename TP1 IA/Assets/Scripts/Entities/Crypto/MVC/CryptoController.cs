@@ -116,6 +116,7 @@ public class CryptoController : MonoBehaviour
 
     bool IsPatrolTime()
     {
+        // TODO: Implement Patrol
         return false;
     }
 

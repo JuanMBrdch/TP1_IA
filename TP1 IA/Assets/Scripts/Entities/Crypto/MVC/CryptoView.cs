@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class CryptoView : MonoBehaviour
 {
@@ -24,8 +23,8 @@ public class CryptoView : MonoBehaviour
         CryptoModel.AttackAction -= AttackActionHandler;
 
     }
-        // Update is called once per frame
-        void Update()
+
+    void Update()
     {
         anim.SetFloat("Velocity", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
         anim.SetBool("IsClapping", _clapping.IsClapping);

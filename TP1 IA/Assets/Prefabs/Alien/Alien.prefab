@@ -140,6 +140,37 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!1 &4259742621629495516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3293588479111285140}
+  m_Layer: 10
+  m_Name: AttackSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3293588479111285140
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4259742621629495516}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.19, z: 1.68}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7759286596031454844}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7759286596031454845
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +183,9 @@ GameObject:
   - component: {fileID: 7759286596031454833}
   - component: {fileID: 7759286596031454846}
   - component: {fileID: 7759286596031454847}
+  - component: {fileID: 78446208334783116}
+  - component: {fileID: 234797312289903595}
+  - component: {fileID: 8292083046482882019}
   m_Layer: 10
   m_Name: Alien
   m_TagString: Enemy
@@ -173,6 +207,7 @@ Transform:
   m_Children:
   - {fileID: 7792423011679264424}
   - {fileID: 1766316762979723134}
+  - {fileID: 3293588479111285140}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -217,10 +252,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd361496d5008dc4b879d41a349e2463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  anim: {fileID: 4234531152981198034}
   target: {fileID: 0}
-  pursuitRadius: 10
+--- !u!114 &78446208334783116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759286596031454845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f87174932c6584d8a21d1c2168424a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 4234531152981198034}
+--- !u!114 &234797312289903595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759286596031454845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da94e7eac4662549b34fb970edfd18a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 9
+  rotationSpeed: 6
+  waypoints: []
+  attackRange: 5
+  attackCooldown: 3
+  meleeAttack: {fileID: 1970024604101015858, guid: 491ba2f748133be4fa95ae32d8007686, type: 3}
+  attackSpawnPoint: {fileID: 3293588479111285140}
+  runAwayDurationTime: 5
+--- !u!114 &8292083046482882019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7759286596031454845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65cd288bb5ff5c24b875a6dfdaef5f79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 10
+  pov: {fileID: 7759286596031454844}
+  angle: 90
+  obstacle:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1001 &7759286594372483395
 PrefabInstance:
   m_ObjectHideFlags: 0

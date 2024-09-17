@@ -27,4 +27,10 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     {
         IsAttacking = true;
     }
+
+    protected override void Start()
+    {
+        base.Start();
+        IsAttacking = false;
+    }
 }

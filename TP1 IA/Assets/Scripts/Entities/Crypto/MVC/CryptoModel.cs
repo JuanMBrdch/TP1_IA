@@ -23,7 +23,6 @@ public class CryptoModel : Enemy, IClapping
     {
         base.Start();
         IsClapping = false;
-        IsAttacking = false;
     }
 
     override protected void Awake()
@@ -53,6 +52,6 @@ public class CryptoModel : Enemy, IClapping
     override protected void ConcreteAttackActionHandler()
     {
         GameObject newFireball = Instantiate(fireball, attackSpawnPoint.position, Quaternion.identity);
-        newFireball.GetComponent<FireballController>().Direction = transform.forward;
+        newFireball.GetComponent<Attack>().Direction = transform.forward;
     }
 }

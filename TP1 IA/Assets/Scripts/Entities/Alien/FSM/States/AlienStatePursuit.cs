@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CryptoStatePursuit : State<CryptoStates>
+public class AlienStatePursuit : State<AlienStates>
 {
     IMove move;
     Transform entity;
     Transform target;
-    public CryptoStatePursuit(IMove move, Transform entity, Transform target)
+    public AlienStatePursuit(IMove move, Transform entity, Transform target)
     {
         this.move = move;
         this.entity = entity;
@@ -16,9 +16,8 @@ public class CryptoStatePursuit : State<CryptoStates>
 
     public override void Execute()
     {
-        base.Execute();
-
         // TODO Implement Pursuit With Obstacle Avoidance
+        base.Execute();
 
         Vector3 dirToTarget = target.position - entity.position;
         move.Move(dirToTarget.normalized);

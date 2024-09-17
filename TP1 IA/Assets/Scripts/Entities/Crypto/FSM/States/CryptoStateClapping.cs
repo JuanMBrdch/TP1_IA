@@ -7,13 +7,13 @@ public class CryptoStateClapping : State<CryptoStates>
     IMove move;
     IClapping clapping;
 
-    Cooldown clappingCooldownDuration;
+    Cooldown clappingDuration;
 
     public CryptoStateClapping(IMove move, IClapping clapping)
     {
         this.move = move;
         this.clapping = clapping;
-        clappingCooldownDuration = new Cooldown(clapping.ClappingDuration, OnEndedClapping);
+        clappingDuration = new Cooldown(clapping.ClappingDuration, OnEndedClapping);
     }
     private void OnEndedClapping()
     {
@@ -25,12 +25,12 @@ public class CryptoStateClapping : State<CryptoStates>
         base.Enter();
         clapping.Clap();
         move.Move(Vector3.zero);
-        clappingCooldownDuration.ResetCooldown();
+        clappingDuration.ResetCooldown();
     }
 
     public override void Execute()
     {
         base.Execute();
-        clappingCooldownDuration.IsCooldown();
+        clappingDuration.IsCooldown();
     }
 }
