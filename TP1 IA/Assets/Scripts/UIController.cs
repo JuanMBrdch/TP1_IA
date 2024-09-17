@@ -7,6 +7,7 @@ public class UIController : MonoBehaviour
 {
     [Header("Scenes")]
     public string newGameScene;
+    public string testGameScene;
     public string mainMenuScene;
 
     [Header("Pause")]
@@ -55,6 +56,12 @@ public class UIController : MonoBehaviour
     {
         UnPause();
         SceneManager.LoadScene(newGameScene);
+    }
+
+    public void NewTestGame()
+    {
+        UnPause();
+        SceneManager.LoadScene(testGameScene);
     }
 
     public void GoToMainMenu()
