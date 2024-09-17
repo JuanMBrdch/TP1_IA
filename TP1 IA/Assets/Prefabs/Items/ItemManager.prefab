@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &732470195642630834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 732470195642630844}
+  - component: {fileID: 732470195642630845}
+  m_Layer: 0
+  m_Name: ItemManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &732470195642630844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732470195642630834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1197155, y: 0.15562922, z: -0.022034049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &732470195642630845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732470195642630834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0982dec831f8966408f4705db371372a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToSpawn:
+  - {fileID: 11400000, guid: 9b803647c6764804bac5ad4de8e109ea, type: 2}
+  - {fileID: 11400000, guid: 85cfe2985bdda4946ba7be2eda0b3017, type: 2}
+  - {fileID: 11400000, guid: aefa5890baf20c84ca4812d8b4f90a0c, type: 2}
+  - {fileID: 11400000, guid: 55a66e1e5b7c9e34788471ac9826efa0, type: 2}
+  - {fileID: 11400000, guid: 75b6548f5ae38434a9435794547893b7, type: 2}
+  - {fileID: 11400000, guid: fe4aff67b0f760048bf968a9c494efd1, type: 2}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  buffSound: {fileID: 8300000, guid: e0dc787eec713e04c836da47d1c09f5e, type: 3}
+  debuffSound: {fileID: 8300000, guid: 273d6d5dc896e3144b4e74f3f7d32573, type: 3}

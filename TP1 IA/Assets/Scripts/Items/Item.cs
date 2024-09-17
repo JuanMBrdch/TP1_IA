@@ -6,6 +6,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     protected Action<RemyModel> OnCollected;
+    
 
     private void OnTriggerEnter(Collider other)
     {

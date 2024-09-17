@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemSpawnerManager : MonoBehaviour
+public class ItemManager : MonoBehaviour
 {
     [SerializeField] List<ItemInfo> itemsToSpawn;
     //[SerializeField] List<float> itemWeight;
@@ -41,6 +41,7 @@ public class ItemSpawnerManager : MonoBehaviour
             if (temp != null)
             {
                 Instantiate(temp.gameObject, location);
+
             }
             
         }
@@ -61,5 +62,5 @@ public class ItemSpawnerManager : MonoBehaviour
         }
 
         return default;
-    }
+    }   
 }
