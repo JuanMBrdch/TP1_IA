@@ -5,19 +5,30 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
-    public Transform target;
+    LineOfSight lineOfSight;
 
     FSM<CryptoStates> fsm;
+    ITreeNode actionTreeRoot;
 
     IMove _move;
     IPatrol _patrol;
     IClapping _clapping;
     IAttack _attack;
 
+    CryptoModel cryptoModel;
+
+    private void Awake()
+    {
+        lineOfSight = GetComponent<LineOfSight>();
+        cryptoModel = GetComponent<CryptoModel>();
+    }
+
     void Start()
     {
         InitFSM();
+        InitDecisionTree();
     }
+    
     void InitFSM()
     {
         _move = GetComponent<IMove>();
@@ -29,9 +40,9 @@ public class CryptoController : MonoBehaviour
 
         var idle = new CryptoStateIdle(_move);
         var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new CryptoStatePursuit(_move, this.transform, target);
+        var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target, cryptoModel.timePrediction);
         var clap = new CryptoStateClapping(_move, _clapping);   
-        var attack = new CryptoStateAttacking(_move, _attack, target);
+        var attack = new CryptoStateAttacking(_move, _attack, cryptoModel.target.transform);
 
         idle.AddTransition(CryptoStates.Patrol, patrol);
         idle.AddTransition(CryptoStates.Pursuit, pursuit);
@@ -58,11 +69,76 @@ public class CryptoController : MonoBehaviour
         attack.AddTransition(CryptoStates.Pursuit, pursuit);
         attack.AddTransition(CryptoStates.Clap, clap);
 
-        fsm.SetInitial(attack);
+        fsm.SetInitial(idle);
     }
+
+    void InitDecisionTree()
+    {
+        var idle = new ActionTree(() => fsm.Transition(CryptoStates.Idle));
+        var patrol = new ActionTree(() => fsm.Transition(CryptoStates.Patrol));
+        var pursuit = new ActionTree(() => fsm.Transition(CryptoStates.Pursuit));
+        var attack = new ActionTree(() => fsm.Transition(CryptoStates.Attack));
+        var clapping = new ActionTree(() => fsm.Transition(CryptoStates.Clap));
+
+        var qCanAttack = new QuestionTree(CanAttack, attack, pursuit);
+        var qPlayerBreakDancing = new QuestionTree(IsPlayerBreakDancing, clapping, qCanAttack);
+        var qPatrolTime = new QuestionTree(IsPatrolTime, patrol, idle);
+        var qIsAlive = new QuestionTree(IsPlayerAlive, qPlayerBreakDancing, idle);
+        var qPlayerInSight = new QuestionTree(IsPlayerInSight, qIsAlive, qPatrolTime);
+        var qIAmAttacking = new QuestionTree(IAmAttacking, attack, qPlayerInSight);
+        var qIAmClapping = new QuestionTree(IAmClapping, clapping, qIAmAttacking);
+
+        actionTreeRoot = qIAmClapping;
+    }
+
+    bool IAmClapping()
+    {
+        return _clapping.IsClapping;
+    }
+
+    bool IAmAttacking()
+    {
+        return _attack.IsAttacking;
+    }
+
+    bool IsPlayerInSight()
+    {
+        return lineOfSight.InView(cryptoModel.target.transform) && lineOfSight.CheckRange(cryptoModel.target.transform) && lineOfSight.CheckAngle(cryptoModel.target.transform);
+    }
+
+    bool IsPlayerAlive()
+    {
+        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
+        if (remyModel != null)
+            return remyModel.IsAlive;
+
+        return false;
+    }
+
+    bool IsPatrolTime()
+    {
+        // TODO: Implement Patrol
+        return false;
+    }
+
+    bool IsPlayerBreakDancing()
+    {
+        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
+        if (remyModel != null)
+            return remyModel.IsBreakDancing;
+
+        return false;
+    }
+
+    bool CanAttack()
+    {
+        return (cryptoModel.target.position - transform.position).magnitude <= _attack.AttackRange;
+    }
+
     void Update()
     {
         fsm.OnUpdate();
+        actionTreeRoot.Execute();
     }
     private void FixedUpdate()
     {

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 536.3358, y: -155}
+  m_AnchoredPosition: {x: 1000, y: -384}
   m_SizeDelta: {x: 872.1062, y: 295.9688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247735709
@@ -181,11 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Laberinto
-
-    Malvado
-
-'
+  m_text: "\xA1Has escapado del laberinto Malvado!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6eb98c2c5a64c2a4e8b5fe21b0b11a98, type: 2}
   m_sharedMaterial: {fileID: 759244851895096396, guid: 6eb98c2c5a64c2a4e8b5fe21b0b11a98, type: 2}
@@ -1320,9 +1316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Jugar
-
-'
+  m_text: Volver a jugar
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6eb98c2c5a64c2a4e8b5fe21b0b11a98, type: 2}
   m_sharedMaterial: {fileID: 759244851895096396, guid: 6eb98c2c5a64c2a4e8b5fe21b0b11a98, type: 2}
@@ -1349,8 +1343,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 14
+  m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 0
@@ -1454,7 +1448,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 179.50024, y: 279}
+  m_AnchoredPosition: {x: 1003, y: 279}
   m_SizeDelta: {x: 254.5889, y: 223.0133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063053604

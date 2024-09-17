@@ -8,11 +8,13 @@ public class CryptoView : MonoBehaviour
     Rigidbody rb;
 
     IClapping _clapping;
+    CryptoModel cryptoModel;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
         _clapping = GetComponent<IClapping>();
+        cryptoModel = GetComponent<CryptoModel>();
 
         CryptoModel.AttackAction += AttackActionHandler;
     }
@@ -21,8 +23,8 @@ public class CryptoView : MonoBehaviour
         CryptoModel.AttackAction -= AttackActionHandler;
 
     }
-        // Update is called once per frame
-        void Update()
+
+    void Update()
     {
         anim.SetFloat("Velocity", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
         anim.SetBool("IsClapping", _clapping.IsClapping);
@@ -31,5 +33,14 @@ public class CryptoView : MonoBehaviour
     void AttackActionHandler()
     {
         anim.SetTrigger("DoAttack");
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (cryptoModel != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, cryptoModel.AttackRange);
+        }
     }
 }
