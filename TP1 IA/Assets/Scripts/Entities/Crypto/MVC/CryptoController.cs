@@ -5,8 +5,6 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
-    public Rigidbody target;
-    public float timePrediction;
     LineOfSight lineOfSight;
 
     FSM<CryptoStates> fsm;
@@ -17,10 +15,12 @@ public class CryptoController : MonoBehaviour
     IClapping _clapping;
     IAttack _attack;
 
+    CryptoModel cryptoModel;
 
     private void Awake()
     {
         lineOfSight = GetComponent<LineOfSight>();
+        cryptoModel = GetComponent<CryptoModel>();
     }
 
     void Start()
@@ -40,9 +40,9 @@ public class CryptoController : MonoBehaviour
 
         var idle = new CryptoStateIdle(_move);
         var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new CryptoStatePursuit(_move, this.transform, target, timePrediction);
+        var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target, cryptoModel.timePrediction);
         var clap = new CryptoStateClapping(_move, _clapping);   
-        var attack = new CryptoStateAttacking(_move, _attack, target.transform);
+        var attack = new CryptoStateAttacking(_move, _attack, cryptoModel.target.transform);
 
         idle.AddTransition(CryptoStates.Patrol, patrol);
         idle.AddTransition(CryptoStates.Pursuit, pursuit);
@@ -103,12 +103,12 @@ public class CryptoController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(target.transform) && lineOfSight.CheckRange(target.transform) && lineOfSight.CheckAngle(target.transform);
+        return lineOfSight.InView(cryptoModel.target.transform) && lineOfSight.CheckRange(cryptoModel.target.transform) && lineOfSight.CheckAngle(cryptoModel.target.transform);
     }
 
     bool IsPlayerAlive()
     {
-        RemyModel remyModel = target.GetComponent<RemyModel>();
+        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
         if (remyModel != null)
             return remyModel.IsAlive;
 
@@ -123,7 +123,7 @@ public class CryptoController : MonoBehaviour
 
     bool IsPlayerBreakDancing()
     {
-        RemyModel remyModel = target.GetComponent<RemyModel>();
+        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
         if (remyModel != null)
             return remyModel.IsBreakDancing;
 
@@ -132,7 +132,7 @@ public class CryptoController : MonoBehaviour
 
     bool CanAttack()
     {
-        return (target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (cryptoModel.target.position - transform.position).magnitude <= _attack.AttackRange;
     }
 
     void Update()

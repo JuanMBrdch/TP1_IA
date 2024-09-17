@@ -4,12 +4,13 @@ using UnityEngine;
 
 public abstract class Enemy : Entity, IPatrol, IAttack
 {
-    [Header("References")]
+    [Header("Patrolling")]
     [SerializeField] List<Transform> waypoints;
+
+    [Header("Attack")]
     [SerializeField] float attackRange;
     [SerializeField] float attackCooldown;
-
-    bool isAttacking;
+    public Rigidbody target;
 
     [Header("Obstacle Avoidance")]
     public float radius;
@@ -17,6 +18,10 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     public float personalArea;
     public LayerMask obsMask;
     ObstacleAvoidance _obs;
+    public float timePrediction;
+
+    bool isAttacking;
+
     protected override void Awake()
     {
         base.Awake();

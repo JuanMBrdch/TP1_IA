@@ -6,8 +6,6 @@ using UnityEngine.UIElements;
 
 public class AlienController : MonoBehaviour
 {
-    public Transform target;
-
     FSM<AlienStates> fsm;
     ITreeNode actionTreeRoot;
     LineOfSight lineOfSight;
@@ -17,9 +15,12 @@ public class AlienController : MonoBehaviour
     IRunAway _runningAway;
     IAttack _attack;
 
+    AlienModel alienModel;
+
     private void Awake()
     {
         lineOfSight = GetComponent<LineOfSight>();
+        alienModel = GetComponent<AlienModel>();
     }
 
     void Start()
@@ -38,9 +39,9 @@ public class AlienController : MonoBehaviour
 
         var idle = new AlienStateIdle(_move);
         var patrol = new AlienStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new AlienStatePursuit(_move, this.transform, target);
+        var pursuit = new AlienStatePursuit(_move, this.transform, alienModel.target.transform);
         var runAway = new AlienStateRunningAway(_move, _runningAway);
-        var attack = new AlienStateAttacking(_move, _attack, target);
+        var attack = new AlienStateAttacking(_move, _attack, alienModel.target.transform);
 
         idle.AddTransition(AlienStates.Patrol, patrol);
         idle.AddTransition(AlienStates.Pursuit, pursuit);
@@ -90,11 +91,11 @@ public class AlienController : MonoBehaviour
     }
     bool CanAttack()
     {
-        return (target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (alienModel.target.position - transform.position).magnitude <= _attack.AttackRange;
     }
     bool IsPlayerBreakDancing()
     {
-        RemyModel remyModel = target.GetComponent<RemyModel>();
+        RemyModel remyModel = alienModel.target.GetComponent<RemyModel>();
         if (remyModel != null)
             return remyModel.IsBreakDancing;
 
@@ -109,7 +110,7 @@ public class AlienController : MonoBehaviour
 
     bool IsPlayerAlive()
     {
-        RemyModel remyModel = target.GetComponent<RemyModel>();
+        RemyModel remyModel = alienModel.target.GetComponent<RemyModel>();
         if (remyModel != null)
             return remyModel.IsAlive;
 
@@ -118,7 +119,7 @@ public class AlienController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(target) && lineOfSight.CheckRange(target) && lineOfSight.CheckAngle(target);
+        return lineOfSight.InView(alienModel.target.transform) && lineOfSight.CheckRange(alienModel.target.transform) && lineOfSight.CheckAngle(alienModel.target.transform);
     }
 
     bool IAmAttacking()

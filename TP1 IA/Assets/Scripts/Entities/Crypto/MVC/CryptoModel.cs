@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class CryptoModel : Enemy, IClapping
 {
+    [Header("Attack")]
     [SerializeField] GameObject fireball;
     [SerializeField] Transform attackSpawnPoint;
+
+    [Header("Clapping")]
     [SerializeField] int clappingDurationTime;
 
     bool isClapping;

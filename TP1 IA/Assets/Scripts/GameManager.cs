@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    [SerializeField] private string victorySceneName = "VictoryScene"; // Nombre de la escena de victoria
-    [SerializeField] private string gameOverSceneName = "GameOverScene"; // Nombre de la escena de GameOver
+    [SerializeField] private string victorySceneName; // Nombre de la escena de victoria
+    [SerializeField] private string gameOverSceneName; // Nombre de la escena de GameOver
 
     private void Awake()
     {

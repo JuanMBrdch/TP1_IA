@@ -6,8 +6,11 @@ using UnityEngine;
 
 public class AlienModel : Enemy, IRunAway
 {
+    [Header("Attack")]
     [SerializeField] GameObject meleeAttack;
     [SerializeField] Transform attackSpawnPoint;
+
+    [Header("Run Away")]
     [SerializeField] int runAwayDurationTime;
 
     public static Action AttackAction;
@@ -16,7 +19,6 @@ public class AlienModel : Enemy, IRunAway
 
     public bool IsRunningAway { get => isRunningAway; set => isRunningAway = value; }
     public int RunAwayDuration { get => runAwayDurationTime; set => runAwayDurationTime = value; }
-
 
     public void RunAway()
     {
