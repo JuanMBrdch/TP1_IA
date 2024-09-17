@@ -29,11 +29,5 @@ public class Pursuit : ISteering
             return dirToPoint;
         }
     }
-    public float TimePrediction
-    {
-        set
-        {
-            _timePrediction = value;
-        }
-    }
+    
 }

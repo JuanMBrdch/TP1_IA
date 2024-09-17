@@ -8658,6 +8658,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4384882287898990673, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
   m_PrefabInstance: {fileID: 4384882286133909265}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &1995771716 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 4384882287898990672, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
+  m_PrefabInstance: {fileID: 4384882286133909265}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2002720131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6553951847628132443, guid: 12cebd717e022954e885aea319f36efb, type: 3}
@@ -11237,6 +11242,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: angle
+      value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: radius
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: personalArea
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: obsMask.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 6757967575222936123, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: angle
       value: 45
@@ -11252,7 +11273,7 @@ PrefabInstance:
     - target: {fileID: 6757967575222936123, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 1995771712}
+      objectReference: {fileID: 1995771716}
     - target: {fileID: 6757967575222936123, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: personalArea
       value: 2
@@ -11261,13 +11282,17 @@ PrefabInstance:
       propertyPath: obsMask.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 6757967575222936123, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: timePrediction
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165948, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_Name
       value: Crypto
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165948, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_RootOrder
@@ -11287,19 +11312,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.045708366
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9989549
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11307,7 +11332,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 185.24
       objectReference: {fileID: 0}
     - target: {fileID: 9140375654458165951, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

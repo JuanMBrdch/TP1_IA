@@ -91,7 +91,7 @@ public class AlienController : Enemy
         {
             if (IsRunningAway)
             {
-                Vector3 fleeDirection = transform.position - (target.position - transform.position); // mirar para atr·s
+                Vector3 fleeDirection = transform.position - (target.position - transform.position); // mirar para atr√°s
                 transform.LookAt(new Vector3(fleeDirection.x, 0, fleeDirection.z));
             }
         }
