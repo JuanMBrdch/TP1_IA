@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -15,6 +16,14 @@ public class UIController : MonoBehaviour
     public GameObject pauseButton;
 
     bool isPaused;
+
+    [Header("Hearts Control")]
+    public int heartsAmount;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+
+    public RemyModel remyModel;
 
     private void Start()
     {
@@ -49,6 +58,30 @@ public class UIController : MonoBehaviour
             {
                 Pause();
             }
+        }
+
+        if (remyModel.Life > heartsAmount)
+        {
+            remyModel.Life = heartsAmount;
+        }
+
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < remyModel.Life)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+            if (i < heartsAmount)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+                hearts[i].enabled = true;
         }
     }
 
