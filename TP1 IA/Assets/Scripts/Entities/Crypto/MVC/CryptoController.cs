@@ -5,7 +5,9 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
-    public Transform target;
+    public Rigidbody target;
+    public float timePrediction;
+    LineOfSight lineOfSight;
 
     FSM<CryptoStates> fsm;
     ITreeNode actionTreeRoot;
@@ -15,7 +17,6 @@ public class CryptoController : MonoBehaviour
     IClapping _clapping;
     IAttack _attack;
 
-    LineOfSight lineOfSight;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class CryptoController : MonoBehaviour
         InitFSM();
         InitDecisionTree();
     }
+    
     void InitFSM()
     {
         _move = GetComponent<IMove>();
@@ -38,9 +40,9 @@ public class CryptoController : MonoBehaviour
 
         var idle = new CryptoStateIdle(_move);
         var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new CryptoStatePursuit(_move, this.transform, target);
+        var pursuit = new CryptoStatePursuit(_move, this.transform, target, timePrediction);
         var clap = new CryptoStateClapping(_move, _clapping);   
-        var attack = new CryptoStateAttacking(_move, _attack, target);
+        var attack = new CryptoStateAttacking(_move, _attack, target.transform);
 
         idle.AddTransition(CryptoStates.Patrol, patrol);
         idle.AddTransition(CryptoStates.Pursuit, pursuit);
@@ -99,10 +101,9 @@ public class CryptoController : MonoBehaviour
         return _attack.IsAttacking;
     }
 
-
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(target) && lineOfSight.CheckRange(target) && lineOfSight.CheckAngle(target);
+        return lineOfSight.InView(target.transform) && lineOfSight.CheckRange(target.transform) && lineOfSight.CheckAngle(target.transform);
     }
 
     bool IsPlayerAlive()
