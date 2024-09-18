@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
+    [SerializeField] float idleTime;
+
     LineOfSight lineOfSight;
 
     FSM<CryptoStates> fsm;
@@ -14,6 +16,7 @@ public class CryptoController : MonoBehaviour
     IPatrol _patrol;
     IClapping _clapping;
     IAttack _attack;
+    IIdle _idle;
 
     CryptoModel cryptoModel;
 
@@ -35,10 +38,11 @@ public class CryptoController : MonoBehaviour
         _patrol = GetComponent<IPatrol>();
         _clapping = GetComponent<IClapping>();
         _attack = GetComponent<IAttack>();
+        _idle = GetComponent<IIdle>();
 
         fsm = new();
 
-        var idle = new CryptoStateIdle(_move);
+        var idle = new CryptoStateIdle(_move, _idle, idleTime);
         var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
         var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target, cryptoModel.timePrediction);
         var clap = new CryptoStateClapping(_move, _clapping);   
@@ -117,7 +121,15 @@ public class CryptoController : MonoBehaviour
 
     bool IsPatrolTime()
     {
-        // TODO: Implement Patrol
+        if (!_patrol.patrolFinished)
+        {
+            return true;
+        }
+        if(_idle.IdleFinished)
+        {
+            return true;
+        }
+
         return false;
     }
 
