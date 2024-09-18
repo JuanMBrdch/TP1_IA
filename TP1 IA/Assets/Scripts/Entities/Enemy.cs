@@ -5,7 +5,8 @@ using UnityEngine;
 public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
 {
     [Header("Patrolling")]
-    [SerializeField] List<Transform> waypoints;    
+    [SerializeField] List<Transform> waypoints;
+    [SerializeField] float waitingTime;
 
     [Header("Attack")]
     public Entity target;
@@ -24,11 +25,16 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
 
     bool isAttacking;
 
+    int currentPatrolWaypointID;
+    int direction;
+
     protected override void Awake()
     {
         base.Awake();
         patrolFinished = true;
         _obs = new ObstacleAvoidance(transform, radius, angle, personalArea, obsMask);
+        currentPatrolWaypointID = -1; // Todavia no tengo ningun waypoint alcanzado.
+        direction = 1;
     }
     
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
@@ -36,7 +42,12 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
     public float AttackRange { get => attackRange; set => attackRange = value; }
     public float AttackCooldown { get => attackCooldown; set => attackCooldown = value; }
     public bool patrolFinished { get; set; }
-    public bool IdleFinished { get; set; }    
+    public bool IdleFinished { get; set; }
+
+    public int CurrentWaypointID => throw new System.NotImplementedException();
+
+    public int Direction { get => direction; }
+    public float WaitingTime { get => waitingTime; }
 
     protected abstract void OnDestroy();
     protected void FinishedAttackActionHandler()
@@ -65,5 +76,14 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
     protected virtual void Start()
     {
         IsAttacking = false;
+    }
+
+    public void WaypointReached()
+    {
+        currentPatrolWaypointID += direction;
+
+        // Cuando llego al final o al principio de la lista cambio la direccion.
+        if (currentPatrolWaypointID == Waypoints.Count - 1 || currentPatrolWaypointID + direction == -1)
+            direction *= -1;
     }
 }

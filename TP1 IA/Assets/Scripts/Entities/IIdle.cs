@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IIdle
 {
     public bool IdleFinished { get; set; }
+    public float WaitingTime { get; }
 }

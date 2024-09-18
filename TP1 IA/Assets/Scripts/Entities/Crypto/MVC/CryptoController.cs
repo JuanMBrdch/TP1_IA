@@ -9,6 +9,7 @@ public class CryptoController : MonoBehaviour
     ITreeNode actionTreeRoot;
     LineOfSight lineOfSight;
 
+    IIdle _idle;
     IMove _move;
     IPatrol _patrol;
     IAttack _attack;
@@ -33,6 +34,7 @@ public class CryptoController : MonoBehaviour
     }
     void InitFSM()
     {
+        _idle = GetComponent<IIdle>();
         _move = GetComponent<IMove>();
         _patrol = GetComponent<IPatrol>();
         _attack = GetComponent<IAttack>();
@@ -40,11 +42,11 @@ public class CryptoController : MonoBehaviour
 
         fsm = new();
 
-        var idle = new EnemyStateIdle(_move);
+        var idle = new EnemyStateIdle(_idle, _move);
         var patrol = new EnemyStatePatrol(_move, this.transform, _patrol);
         var pursuit = new EnemyStatePursuit(_move, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
         var attack = new EnemyStateAttacking(_move, _attack, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
-        var clap = new EnemyStateClapping(_move, _clapping);   
+        var clap = new EnemyStateClapping(_move, _clapping); 
 
         idle.AddTransition(EnemyStates.Patrol, patrol);
         idle.AddTransition(EnemyStates.Pursuit, pursuit);
@@ -69,7 +71,7 @@ public class CryptoController : MonoBehaviour
         attack.AddTransition(EnemyStates.Idle, idle);
         attack.AddTransition(EnemyStates.Patrol, patrol);
         attack.AddTransition(EnemyStates.Pursuit, pursuit);
-        attack.AddTransition(EnemyStates.Clap, clap);
+        attack.AddTransition(EnemyStates.Clap, clap);   
 
         fsm.SetInitial(idle);
     }

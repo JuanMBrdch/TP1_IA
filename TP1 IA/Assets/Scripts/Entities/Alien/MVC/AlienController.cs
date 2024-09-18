@@ -10,6 +10,7 @@ public class AlienController : MonoBehaviour
     ITreeNode actionTreeRoot;
     LineOfSight lineOfSight;
 
+    IIdle _idle;
     IMove _move;
     IPatrol _patrol;
     IRunAway _runningAway;
@@ -34,6 +35,7 @@ public class AlienController : MonoBehaviour
     }
     void InitFSM()
     {
+        _idle = GetComponent<IIdle>();
         _move = GetComponent<IMove>();
         _patrol = GetComponent<IPatrol>();
         _attack = GetComponent<IAttack>();
@@ -41,7 +43,7 @@ public class AlienController : MonoBehaviour
 
         fsm = new();
 
-        var idle = new EnemyStateIdle(_move);
+        var idle = new EnemyStateIdle(_idle, _move);
         var patrol = new EnemyStatePatrol(_move, this.transform, _patrol);
         var pursuit = new EnemyStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
         var attack = new EnemyStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.5453745, g: 0.26417324, b: 0.14566512, a: 1}
+  m_IndirectSpecularColor: {r: 0.5457286, g: 0.26430324, b: 0.1457335, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8972,6 +8972,17 @@ Rigidbody:
   m_CorrespondingSourceObject: {fileID: 4384882287898990672, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
   m_PrefabInstance: {fileID: 4384882286133909265}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1995771718 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4404130192583864881, guid: 9de6dd7e15d5abc468bdbb0a4deec855, type: 3}
+  m_PrefabInstance: {fileID: 4384882286133909265}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b30206ce217c19e40a4878a3401bdef3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2002720131 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6553951847628132443, guid: 12cebd717e022954e885aea319f36efb, type: 3}
@@ -11531,6 +11542,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1252529281805405762, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: range
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: angle
       value: 160
@@ -11542,7 +11557,7 @@ PrefabInstance:
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: target
       value: 
-      objectReference: {fileID: 1995771716}
+      objectReference: {fileID: 1995771718}
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: personalArea
       value: 1
@@ -11550,6 +11565,14 @@ PrefabInstance:
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: obsMask.m_Bits
       value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: timePrediction
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: lineOfSightGraceTime
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: waypoints.Array.size
