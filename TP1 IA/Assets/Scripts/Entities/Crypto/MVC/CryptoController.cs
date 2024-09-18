@@ -5,22 +5,26 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
+    FSM<EnemyStates> fsm;
+    ITreeNode actionTreeRoot;
     LineOfSight lineOfSight;
 
-    FSM<CryptoStates> fsm;
-    ITreeNode actionTreeRoot;
-
+    IIdle _idle;
     IMove _move;
     IPatrol _patrol;
-    IClapping _clapping;
     IAttack _attack;
+    IClapping _clapping;
 
     CryptoModel cryptoModel;
+
+    Cooldown graceTimeCooldown;
 
     private void Awake()
     {
         lineOfSight = GetComponent<LineOfSight>();
         cryptoModel = GetComponent<CryptoModel>();
+
+        graceTimeCooldown = new Cooldown(cryptoModel.LineOfSightGraceTime);
     }
 
     void Start()
@@ -28,57 +32,57 @@ public class CryptoController : MonoBehaviour
         InitFSM();
         InitDecisionTree();
     }
-    
     void InitFSM()
     {
+        _idle = GetComponent<IIdle>();
         _move = GetComponent<IMove>();
         _patrol = GetComponent<IPatrol>();
-        _clapping = GetComponent<IClapping>();
         _attack = GetComponent<IAttack>();
+        _clapping = GetComponent<IClapping>();
 
         fsm = new();
 
-        var idle = new CryptoStateIdle(_move);
-        var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target, cryptoModel.timePrediction);
-        var clap = new CryptoStateClapping(_move, _clapping);   
-        var attack = new CryptoStateAttacking(_move, _attack, cryptoModel.target.transform);
+        var idle = new EnemyStateIdle(_idle, _move);
+        var patrol = new EnemyStatePatrol(_idle, _move, this.transform, _patrol);
+        var pursuit = new EnemyStatePursuit(_move, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
+        var attack = new EnemyStateAttacking(_move, _attack, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
+        var clap = new EnemyStateClapping(_move, _clapping); 
 
-        idle.AddTransition(CryptoStates.Patrol, patrol);
-        idle.AddTransition(CryptoStates.Pursuit, pursuit);
-        idle.AddTransition(CryptoStates.Clap, clap);
-        idle.AddTransition(CryptoStates.Attack, attack);
+        idle.AddTransition(EnemyStates.Patrol, patrol);
+        idle.AddTransition(EnemyStates.Pursuit, pursuit);
+        idle.AddTransition(EnemyStates.Clap, clap);
+        idle.AddTransition(EnemyStates.Attack, attack);
 
-        patrol.AddTransition(CryptoStates.Idle, idle);
-        patrol.AddTransition(CryptoStates.Pursuit, pursuit);
-        patrol.AddTransition(CryptoStates.Clap, clap);
-        patrol.AddTransition(CryptoStates.Attack, attack);
+        patrol.AddTransition(EnemyStates.Idle, idle);
+        patrol.AddTransition(EnemyStates.Pursuit, pursuit);
+        patrol.AddTransition(EnemyStates.Clap, clap);
+        patrol.AddTransition(EnemyStates.Attack, attack);
 
-        pursuit.AddTransition(CryptoStates.Idle, idle);
-        pursuit.AddTransition(CryptoStates.Patrol, patrol);
-        pursuit.AddTransition(CryptoStates.Clap, clap);
-        pursuit.AddTransition(CryptoStates.Attack, attack);
+        pursuit.AddTransition(EnemyStates.Idle, idle);
+        pursuit.AddTransition(EnemyStates.Patrol, patrol);
+        pursuit.AddTransition(EnemyStates.Clap, clap);
+        pursuit.AddTransition(EnemyStates.Attack, attack);
 
-        clap.AddTransition(CryptoStates.Idle, idle);
-        clap.AddTransition(CryptoStates.Patrol, patrol);
-        clap.AddTransition(CryptoStates.Pursuit, pursuit);
-        clap.AddTransition(CryptoStates.Attack, attack);
+        clap.AddTransition(EnemyStates.Idle, idle);
+        clap.AddTransition(EnemyStates.Patrol, patrol);
+        clap.AddTransition(EnemyStates.Pursuit, pursuit);
+        clap.AddTransition(EnemyStates.Attack, attack);
 
-        attack.AddTransition(CryptoStates.Idle, idle);
-        attack.AddTransition(CryptoStates.Patrol, patrol);
-        attack.AddTransition(CryptoStates.Pursuit, pursuit);
-        attack.AddTransition(CryptoStates.Clap, clap);
+        attack.AddTransition(EnemyStates.Idle, idle);
+        attack.AddTransition(EnemyStates.Patrol, patrol);
+        attack.AddTransition(EnemyStates.Pursuit, pursuit);
+        attack.AddTransition(EnemyStates.Clap, clap);   
 
         fsm.SetInitial(idle);
     }
 
     void InitDecisionTree()
     {
-        var idle = new ActionTree(() => fsm.Transition(CryptoStates.Idle));
-        var patrol = new ActionTree(() => fsm.Transition(CryptoStates.Patrol));
-        var pursuit = new ActionTree(() => fsm.Transition(CryptoStates.Pursuit));
-        var attack = new ActionTree(() => fsm.Transition(CryptoStates.Attack));
-        var clapping = new ActionTree(() => fsm.Transition(CryptoStates.Clap));
+        var idle = new ActionTree(() => fsm.Transition(EnemyStates.Idle));
+        var patrol = new ActionTree(() => fsm.Transition(EnemyStates.Patrol));
+        var pursuit = new ActionTree(() => fsm.Transition(EnemyStates.Pursuit));
+        var attack = new ActionTree(() => fsm.Transition(EnemyStates.Attack));
+        var clapping = new ActionTree(() => fsm.Transition(EnemyStates.Clap));
 
         var qCanAttack = new QuestionTree(CanAttack, attack, pursuit);
         var qPlayerBreakDancing = new QuestionTree(IsPlayerBreakDancing, clapping, qCanAttack);
@@ -103,7 +107,15 @@ public class CryptoController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(cryptoModel.target.transform) && lineOfSight.CheckRange(cryptoModel.target.transform) && lineOfSight.CheckAngle(cryptoModel.target.transform);
+        bool InSightAndInRangeAndWithinAngle =
+            lineOfSight.InView(cryptoModel.target.transform) &&
+            lineOfSight.CheckRange(cryptoModel.target.transform) &&
+            lineOfSight.CheckAngle(cryptoModel.target.transform);
+
+        if (InSightAndInRangeAndWithinAngle)
+            graceTimeCooldown.ResetCooldown();
+
+        return graceTimeCooldown.IsCooldown() || InSightAndInRangeAndWithinAngle;
     }
 
     bool IsPlayerAlive()
@@ -117,8 +129,7 @@ public class CryptoController : MonoBehaviour
 
     bool IsPatrolTime()
     {
-        // TODO: Implement Patrol
-        return false;
+        return !_idle.IsIdleing;
     }
 
     bool IsPlayerBreakDancing()
@@ -132,19 +143,24 @@ public class CryptoController : MonoBehaviour
 
     bool CanAttack()
     {
-        return (cryptoModel.target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (cryptoModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
     }
 
     void Update()
     {
         fsm.OnUpdate();
-        actionTreeRoot.Execute();
+        
+        if (actionTreeRoot != null)
+        {
+            actionTreeRoot.Execute();
+        }
+        
     }
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         fsm.OnFixedUpdate();
     }
-    private void LateUpdate()
+    void LateUpdate()
     {
         fsm.OnLateUpdate();
     }

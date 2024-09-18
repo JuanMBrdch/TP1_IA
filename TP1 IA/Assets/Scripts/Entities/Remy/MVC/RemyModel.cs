@@ -9,16 +9,13 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     [SerializeField] LayerMask groundLayer;
 
     [Header("Parameters")]
-    [SerializeField] float speedLimit;
-    [SerializeField] int energyLimit;
+    [SerializeField] float speedLimit = 6;
+    [SerializeField] int energyLimit = 2;
     [SerializeField] int lifeLimit;
     [SerializeField] int breakDancingDurationTime = 3;
     [SerializeField] int breakDancingCoolDownTime = 5;
     [SerializeField] int energy;
-    public int Energy { get => energy; set => energy = value; }
-    
     [SerializeField] int life;
-    public int Life { get => life; set => life = value; }
 
     readonly float raycastDistance = 0.1f;
 
@@ -47,10 +44,8 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     {
         IsJumping = false;
     }
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-
         IsBreakDancing = false;
         IsJumping = false;
 
@@ -110,7 +105,6 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Die()
     {
         DieAction?.Invoke();
-        GameManager.Instance.TriggerGameOver();
     }
 
     public bool IsDead()
@@ -121,7 +115,7 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Jump()
     {
         IsJumping = true;
-        rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
+        Rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
         JumpAction?.Invoke();
     }
 
