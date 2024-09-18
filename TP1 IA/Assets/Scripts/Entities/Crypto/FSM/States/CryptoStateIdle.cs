@@ -34,6 +34,6 @@ public class CryptoStateIdle : State<CryptoStates>
         //{
         //    idle.IdleFinished = true;
         //}
-        Debug.Log("Idle");
+        //Debug.Log("Idle");
     }
 }

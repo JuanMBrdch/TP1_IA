@@ -9,6 +9,9 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
 
     [Header("Attack")]
     public Entity target;
+    public bool canSeePLayer;
+    public float delayToLoosePlayer;
+    public float delayTimer;
     [SerializeField] float attackRange;
     [SerializeField] float attackCooldown;
     [SerializeField] GameObject concreteAttack;

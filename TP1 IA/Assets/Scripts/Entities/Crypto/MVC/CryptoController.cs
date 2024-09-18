@@ -101,10 +101,34 @@ public class CryptoController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return 
-            lineOfSight.InView(cryptoModel.target.EyeSight) && 
+        if(lineOfSight.InView(cryptoModel.target.EyeSight) &&
             lineOfSight.CheckRange(cryptoModel.target.EyeSight) &&
-            lineOfSight.CheckAngle(cryptoModel.target.EyeSight);
+            lineOfSight.CheckAngle(cryptoModel.target.EyeSight))
+        {
+            cryptoModel.delayTimer = 0;
+            cryptoModel.canSeePLayer = true;
+            //Debug.Log("I can see you");
+            Debug.Log("InView:" + lineOfSight.InView(cryptoModel.target.EyeSight));
+            Debug.Log("CheckRange: " + lineOfSight.CheckRange(cryptoModel.target.EyeSight));
+            Debug.Log("CheckAngle: " + lineOfSight.CheckAngle(cryptoModel.target.EyeSight));
+            return true;
+        }
+        else if (cryptoModel.canSeePLayer && cryptoModel.delayTimer < cryptoModel.delayToLoosePlayer)
+        {
+            cryptoModel.delayTimer += Time.deltaTime;
+            Debug.Log("Detection delay");
+            return true;
+        }
+        else if (cryptoModel.canSeePLayer && cryptoModel.delayTimer > cryptoModel.delayToLoosePlayer)
+        {
+            cryptoModel.canSeePLayer = false;
+            cryptoModel.delayTimer = 0;
+            Debug.Log("Detection delay ended");
+            return false;
+        }
+
+        return false;
+            
     }
 
     bool IsPlayerAlive()

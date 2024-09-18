@@ -11563,6 +11563,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
+      propertyPath: delayToLoosePlayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5782906455124526250, guid: a4c19fc747bc48b4db996d3e85350ff2, type: 3}
       propertyPath: waypoints.Array.size
       value: 3
       objectReference: {fileID: 0}
