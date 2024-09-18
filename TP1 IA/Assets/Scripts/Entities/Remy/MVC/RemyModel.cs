@@ -47,8 +47,10 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     {
         IsJumping = false;
     }
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         IsBreakDancing = false;
         IsJumping = false;
 
@@ -108,6 +110,7 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Die()
     {
         DieAction?.Invoke();
+        GameManager.Instance.TriggerGameOver();
     }
 
     public bool IsDead()
@@ -118,7 +121,7 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Jump()
     {
         IsJumping = true;
-        Rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
         JumpAction?.Invoke();
     }
 

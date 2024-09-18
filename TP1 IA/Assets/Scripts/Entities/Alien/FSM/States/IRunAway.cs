@@ -1,6 +1,5 @@
 public interface IRunAway
 {
-
     void RunAway();
 
     bool IsRunningAway { get; set; }

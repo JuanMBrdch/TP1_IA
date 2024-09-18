@@ -5,20 +5,23 @@ using UnityEngine;
 public class AlienStatePursuit : State<AlienStates>
 {
     IMove move;
-    Pursuit pursuit;
-
-    public AlienStatePursuit(IMove move, Transform entity, Rigidbody target, float timePrediction)
+    Transform entity;
+    Transform target;
+    public AlienStatePursuit(IMove move, Transform entity, Transform target)
     {
         this.move = move;
-        pursuit = new(entity, target, timePrediction);
+        this.entity = entity;
+        this.target = target;
     }
 
-    public override void FixedExecute()
+    public override void Execute()
     {
-        base.FixedExecute();
+        // TODO Implement Pursuit With Obstacle Avoidance
+        base.Execute();
 
-        Vector3 pursuitDir = pursuit.GetDir();
-        move.Move(pursuitDir);
-        move.Look(pursuitDir);
+        Vector3 dirToTarget = target.position - entity.position;
+        move.Move(dirToTarget.normalized);
+        dirToTarget.y = 0;
+        move.Look(dirToTarget);
     }
 }

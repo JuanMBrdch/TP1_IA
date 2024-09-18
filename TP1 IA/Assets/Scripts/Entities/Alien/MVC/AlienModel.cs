@@ -6,11 +6,12 @@ using UnityEngine;
 
 public class AlienModel : Enemy, IRunAway
 {
+    [Header("Attack")]
+    [SerializeField] GameObject meleeAttack;
+    [SerializeField] Transform attackSpawnPoint;
+
     [Header("Run Away")]
     [SerializeField] int runAwayDurationTime;
-
-    [Header("Line of sight grace time")]
-    [SerializeField] float lineOfSightGraceTime;
 
     public static Action AttackAction;
 
@@ -18,7 +19,6 @@ public class AlienModel : Enemy, IRunAway
 
     public bool IsRunningAway { get => isRunningAway; set => isRunningAway = value; }
     public int RunAwayDuration { get => runAwayDurationTime; set => runAwayDurationTime = value; }
-    public float LineOfSightGraceTime { get => lineOfSightGraceTime; set => lineOfSightGraceTime = value; }
 
     public void RunAway()
     {
@@ -42,6 +42,12 @@ public class AlienModel : Enemy, IRunAway
     {
         AlienAnimController.FinishedAttackAction -= FinishedAttackActionHandler;
         AlienAnimController.ConcreteAttackAction -= ConcreteAttackActionHandler;
+    }
+
+    protected override void ConcreteAttackActionHandler()
+    {
+        GameObject newFireball = Instantiate(meleeAttack, attackSpawnPoint.position, Quaternion.identity);
+        newFireball.GetComponent<Attack>().Direction = transform.forward;
     }
 
     protected override void Start()

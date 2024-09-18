@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class AlienStateAttacking : State<AlienStates>
 {
@@ -9,17 +8,16 @@ public class AlienStateAttacking : State<AlienStates>
 
     IMove move;
     IAttack attack;
-    Cooldown attackCooldown;
 
-    Pursuit pursuit;
+    Cooldown attackingCooldown;
 
-    public AlienStateAttacking(IMove move, IAttack attack, Transform entity, Rigidbody target, float timePrediction)
+    public AlienStateAttacking(IMove move, IAttack attack, Transform target)
     {
         this.move = move;
         this.attack = attack;
+        this.target = target;
 
-        attackCooldown = new Cooldown(attack.AttackCooldown);
-        pursuit = new(entity, target, timePrediction * .5f);
+        attackingCooldown = new Cooldown(attack.AttackCooldown);
     }
     public override void Enter()
     {
@@ -31,16 +29,15 @@ public class AlienStateAttacking : State<AlienStates>
     public override void FixedExecute()
     {
         base.FixedExecute();
+        move.Look(target);
 
-        Vector3 pursuitDir = pursuit.GetDir();
-        move.Look(pursuitDir);
-
-        if (!attack.IsAttacking && !attackCooldown.IsCooldown()) // Si estoy atacando, y ya terminé de atacar, vuelvo a atacar
+        if (!attack.IsAttacking && !attackingCooldown.IsCooldown()) // Si estoy atacando, y ya terminé de atacar, vuelvo a atacar
             Attack();
     }
+
     private void Attack()
     {
         attack.Attack();
-        attackCooldown.ResetCooldown();
+        attackingCooldown.ResetCooldown();
     }
 }
