@@ -9,13 +9,13 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     [SerializeField] LayerMask groundLayer;
 
     [Header("Parameters")]
-    [SerializeField] float speedLimit = 6;
-    [SerializeField] int energyLimit = 2;
+    [SerializeField] float speedLimit;
+    [SerializeField] int energyLimit;
     [SerializeField] int lifeLimit;
     [SerializeField] int breakDancingDurationTime = 3;
     [SerializeField] int breakDancingCoolDownTime = 5;
     [SerializeField] int energy;
-    public int Energy { get => energy; }
+    public int Energy { get => energy; set => energy = value; }
     
     [SerializeField] int life;
     public int Life { get => life; set => life = value; }

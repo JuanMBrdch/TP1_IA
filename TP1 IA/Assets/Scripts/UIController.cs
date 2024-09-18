@@ -34,6 +34,9 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         isPaused = false;
+
+        drinksAmount = remyModel.Energy;
+        heartsAmount = remyModel.Life;
     }
 
     public void Pause()
@@ -66,10 +69,14 @@ public class UIController : MonoBehaviour
             }
         }
 
-        if (remyModel.Life > heartsAmount)
-        {
-            remyModel.Life = heartsAmount;
-        }
+        //if (remyModel.Life > heartsAmount)
+        //{
+        //    remyModel.Life = heartsAmount;
+        //}
+        //else if (remyModel.Energy > drinksAmount)
+        //{
+        //    remyModel.Energy = drinksAmount;
+        //}
 
         for (int i = 0; i < hearts.Length; i++)
         {
