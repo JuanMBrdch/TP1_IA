@@ -91,18 +91,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b30206ce217c19e40a4878a3401bdef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 8
   rotationSpeed: 6
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
   speedLimit: 6
-  energyLimit: 2
-  lifeLimit: 3
+  energyLimit: 3
+  lifeLimit: 10
   breakDancingDurationTime: 3
   breakDancingCoolDownTime: 5
-  energy: 1
-  life: 1
+  energy: 3
+  life: 5
 --- !u!114 &4634753274601197218
 MonoBehaviour:
   m_ObjectHideFlags: 0

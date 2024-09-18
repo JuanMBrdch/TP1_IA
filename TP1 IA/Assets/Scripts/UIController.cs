@@ -89,6 +89,25 @@ public class UIController : MonoBehaviour
             else
                 hearts[i].enabled = true;
         }
+
+        for (int i = 0; i < drinks.Length; i++)
+        {
+            if (i < remyModel.Energy)
+            {
+                drinks[i].sprite = fullDrink;
+            }
+            else
+            {
+                drinks[i].sprite = emptyDrink;
+            }
+
+            if (i < heartsAmount)
+            {
+                drinks[i].enabled = true;
+            }
+            else
+                drinks[i].enabled = true;
+        }
     }
 
     public void NewGame()
