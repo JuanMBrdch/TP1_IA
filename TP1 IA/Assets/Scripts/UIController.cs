@@ -23,6 +23,12 @@ public class UIController : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
+    [Header("Energy Control")]
+    public int drinksAmount;
+    public Image[] drinks;
+    public Sprite fullDrink;
+    public Sprite emptyDrink;
+
     public RemyModel remyModel;
 
     private void Start()
