@@ -19,6 +19,5 @@ public class EnemyStatePursuit : State<EnemyStates>
 
         Vector3 pursuitDir = pursuit.GetDir();
         move.Move(pursuitDir);
-        // move.Look(pursuitDir);
     }
 }

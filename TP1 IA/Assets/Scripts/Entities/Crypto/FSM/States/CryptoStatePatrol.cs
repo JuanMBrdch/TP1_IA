@@ -23,7 +23,7 @@ public class CryptoStatePatrol : State<CryptoStates>
     public override void Enter()
     {
         base.Enter();
-        patrol.patrolFinished = false;
+        // patrol.patrolFinished = false;
     }
 
     public override void Execute()
@@ -52,7 +52,7 @@ public class CryptoStatePatrol : State<CryptoStates>
                 if (reverse != true)
                 {
                     reverse = true;
-                    patrol.patrolFinished = true;
+                    // patrol.patrolFinished = true;
                 }                
                 //_finished = true;
             }
@@ -62,7 +62,7 @@ public class CryptoStatePatrol : State<CryptoStates>
                 if (reverse != false)
                 {
                     reverse = false;
-                    patrol.patrolFinished = true;
+                    // patrol.patrolFinished = true;
                 }                
                 //_finished = true;
             }

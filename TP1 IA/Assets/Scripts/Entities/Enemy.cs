@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
+public abstract class Enemy : Entity, IIdle, IPatrol, IAttack
 {
     [Header("Patrolling")]
     [SerializeField] List<Transform> waypoints;
@@ -27,7 +27,9 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
     public float timePrediction;
 
     bool isAttacking;
+    bool isIdleing;
 
+    // patrolling
     int currentPatrolWaypointID;
     int direction;
 
@@ -39,7 +41,7 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
         currentPatrolWaypointID = -1; // Todavia no tengo ningun waypoint alcanzado.
         direction = 1;
     }
-    
+
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public List<Transform> Waypoints { get => waypoints; }
     public float AttackRange { get => attackRange; set => attackRange = value; }
@@ -47,10 +49,11 @@ public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
     public bool patrolFinished { get; set; }
     public bool IdleFinished { get; set; }
 
-    public int CurrentWaypointID => throw new System.NotImplementedException();
+    public int CurrentWaypointID { get => currentPatrolWaypointID; }
 
     public int Direction { get => direction; }
     public float WaitingTime { get => waitingTime; }
+    public bool IsIdleing { get => isIdleing; set => isIdleing = value; }
 
     protected abstract void OnDestroy();
     protected void FinishedAttackActionHandler()

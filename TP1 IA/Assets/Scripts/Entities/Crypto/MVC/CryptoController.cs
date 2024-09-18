@@ -43,7 +43,7 @@ public class CryptoController : MonoBehaviour
         fsm = new();
 
         var idle = new EnemyStateIdle(_idle, _move);
-        var patrol = new EnemyStatePatrol(_move, this.transform, _patrol);
+        var patrol = new EnemyStatePatrol(_idle, _move, this.transform, _patrol);
         var pursuit = new EnemyStatePursuit(_move, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
         var attack = new EnemyStateAttacking(_move, _attack, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
         var clap = new EnemyStateClapping(_move, _clapping); 
@@ -129,8 +129,7 @@ public class CryptoController : MonoBehaviour
 
     bool IsPatrolTime()
     {
-        // TODO: Implement Patrol
-        return false;
+        return !_idle.IsIdleing;
     }
 
     bool IsPlayerBreakDancing()

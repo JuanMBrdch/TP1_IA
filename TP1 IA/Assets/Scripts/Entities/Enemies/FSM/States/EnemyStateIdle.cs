@@ -6,26 +6,30 @@ public class EnemyStateIdle : State<EnemyStates>
 {
     IMove move;
     IIdle idle;
-
-    Cooldown waitingTime;
+    Cooldown waitingTimeCooldown;
 
     public EnemyStateIdle(IIdle idle, IMove move)
     {
         this.move = move;
         this.idle = idle;
-        waitingTime = new(idle.WaitingTime);
+        waitingTimeCooldown = new(idle.WaitingTime, OnEndedIldeing);
+    }
+
+    private void OnEndedIldeing()
+    {
+        idle.IsIdleing = false;
     }
 
     public override void Enter()
     {
         base.Enter();
         move.Move(Vector3.zero);
-        waitingTime.ResetCooldown();
+        waitingTimeCooldown.ResetCooldown();
     }
 
     public override void Execute()
     {
         base.Execute();
-        waitingTime.IsCooldown();
+        waitingTimeCooldown.IsCooldown();
     } 
 }
