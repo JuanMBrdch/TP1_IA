@@ -6,10 +6,6 @@ using UnityEngine;
 
 public class AlienModel : Enemy, IRunAway
 {
-    [Header("Attack")]
-    [SerializeField] GameObject meleeAttack;
-    [SerializeField] Transform attackSpawnPoint;
-
     [Header("Run Away")]
     [SerializeField] int runAwayDurationTime;
 
@@ -42,12 +38,6 @@ public class AlienModel : Enemy, IRunAway
     {
         AlienAnimController.FinishedAttackAction -= FinishedAttackActionHandler;
         AlienAnimController.ConcreteAttackAction -= ConcreteAttackActionHandler;
-    }
-
-    protected override void ConcreteAttackActionHandler()
-    {
-        GameObject newFireball = Instantiate(meleeAttack, attackSpawnPoint.position, Quaternion.identity);
-        newFireball.GetComponent<Attack>().Direction = transform.forward;
     }
 
     protected override void Start()

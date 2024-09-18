@@ -8,12 +8,18 @@ public abstract class Entity : MonoBehaviour, IMove
     public float speed;
     public float rotationSpeed = 6;
 
-    protected Rigidbody rb;
+    [Header("Eye Sight")]
+    [SerializeField] Transform eyeSight;
+
+    private Rigidbody rb;
+
+    public Transform EyeSight { get => eyeSight; set => eyeSight = value; }
+    public Rigidbody Rb { get => rb; set => rb = value; }
 
     // Start is called before the first frame update
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        Rb = GetComponent<Rigidbody>();
     }
     protected virtual void Start()
     {
@@ -23,8 +29,8 @@ public abstract class Entity : MonoBehaviour, IMove
     public virtual void Move(Vector3 dir)
     {
         dir *= speed;
-        dir.y = rb.velocity.y;
-        rb.velocity = dir;
+        dir.y = Rb.velocity.y;
+        Rb.velocity = dir;
     }
     public void Look(Vector3 dir)
     {

@@ -8,9 +8,11 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     [SerializeField] List<Transform> waypoints;
 
     [Header("Attack")]
+    public Entity target;
     [SerializeField] float attackRange;
     [SerializeField] float attackCooldown;
-    public Rigidbody target;
+    [SerializeField] GameObject concreteAttack;
+    [SerializeField] Transform attackSpawnPoint;
 
     [Header("Obstacle Avoidance")]
     public float radius;
@@ -38,14 +40,18 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     {
         IsAttacking = false;
     }
-    protected abstract void ConcreteAttackActionHandler();// Momento exacto en el que el ataque puede hacer da�o
+    protected void ConcreteAttackActionHandler()
+    {
+        GameObject concreteAttackGO = Instantiate(concreteAttack, attackSpawnPoint.position, Quaternion.identity);
+        concreteAttackGO.GetComponent<Attack>().Direction = transform.forward;
+    }
 
     public override void Move(Vector3 dir)
     {
-        dir = _obs.GetDir(dir, false);
+        Vector3 obsDir = _obs.GetDir(dir, false);
+        obsDir.y = 0;
         dir.y = 0;
-        Look(dir);
-        base.Move(dir);
+        base.Move(obsDir);
     }
     
     public virtual void Attack()
