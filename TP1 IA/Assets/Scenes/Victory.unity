@@ -1601,7 +1601,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910413602}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: NewGame
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
