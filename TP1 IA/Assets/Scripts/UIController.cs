@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
@@ -16,9 +17,26 @@ public class UIController : MonoBehaviour
 
     bool isPaused;
 
+    [Header("Hearts Control")]
+    public int heartsAmount;
+    public Image[] hearts;
+    public Sprite fullHeart;
+    public Sprite emptyHeart;
+
+    [Header("Energy Control")]
+    public int drinksAmount;
+    public Image[] drinks;
+    public Sprite fullDrink;
+    public Sprite emptyDrink;
+
+    public RemyModel remyModel;
+
     private void Start()
     {
         isPaused = false;
+
+        drinksAmount = remyModel.Energy;
+        heartsAmount = remyModel.Life;
     }
 
     public void Pause()
@@ -39,16 +57,63 @@ public class UIController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
             {
                 UnPause();
-            } 
+            }
             else
             {
                 Pause();
             }
+        }
+
+        //if (remyModel.Life > heartsAmount)
+        //{
+        //    remyModel.Life = heartsAmount;
+        //}
+        //else if (remyModel.Energy > drinksAmount)
+        //{
+        //    remyModel.Energy = drinksAmount;
+        //}
+
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < remyModel.Life)
+            {
+                hearts[i].sprite = fullHeart;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeart;
+            }
+
+            if (i < heartsAmount)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+                hearts[i].enabled = true;
+        }
+
+        for (int i = 0; i < drinks.Length; i++)
+        {
+            if (i < remyModel.Energy)
+            {
+                drinks[i].sprite = fullDrink;
+            }
+            else
+            {
+                drinks[i].sprite = emptyDrink;
+            }
+
+            if (i < heartsAmount)
+            {
+                drinks[i].enabled = true;
+            }
+            else
+                drinks[i].enabled = true;
         }
     }
 
@@ -75,3 +140,4 @@ public class UIController : MonoBehaviour
         Application.Quit();
     }
 }
+

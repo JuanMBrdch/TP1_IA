@@ -15,7 +15,11 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     [SerializeField] int breakDancingDurationTime = 3;
     [SerializeField] int breakDancingCoolDownTime = 5;
     [SerializeField] int energy;
+    public int Energy { get => energy; set => energy = value; }
+
     [SerializeField] int life;
+
+    public int Life { get => life; set => life = value; }
 
     readonly float raycastDistance = 0.1f;
 
