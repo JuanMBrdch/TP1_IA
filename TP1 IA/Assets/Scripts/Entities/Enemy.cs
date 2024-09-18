@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Enemy : Entity, IPatrol, IAttack
+public abstract class Enemy : Entity, IPatrol, IAttack, IIdle
 {
     [Header("Patrolling")]
-    [SerializeField] List<Transform> waypoints;
+    [SerializeField] List<Transform> waypoints;    
 
     [Header("Attack")]
     public Entity target;
@@ -27,6 +27,7 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     protected override void Awake()
     {
         base.Awake();
+        patrolFinished = true;
         _obs = new ObstacleAvoidance(transform, radius, angle, personalArea, obsMask);
     }
     
@@ -34,6 +35,8 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     public List<Transform> Waypoints { get => waypoints; }
     public float AttackRange { get => attackRange; set => attackRange = value; }
     public float AttackCooldown { get => attackCooldown; set => attackCooldown = value; }
+    public bool patrolFinished { get; set; }
+    public bool IdleFinished { get; set; }    
 
     protected abstract void OnDestroy();
     protected void FinishedAttackActionHandler()
