@@ -3,20 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CryptoModel : Enemy, IClapping
+public class CryptoModel : EnemyModel, IClapping
 {
     [Header("Clapping")]
     [SerializeField] int clappingDurationTime;
-    
-    [Header("Line of sight grace time")]
-    [SerializeField] float lineOfSightGraceTime;
 
     bool isClapping;
 
-    public static Action AttackAction;
     public bool IsClapping { get => isClapping; set => isClapping = value; }
     public int ClappingDuration { get => clappingDurationTime; set => clappingDurationTime = value; }
-    public float LineOfSightGraceTime { get => lineOfSightGraceTime; set => lineOfSightGraceTime = value; }
+
+    public static Action AttackAction;
+    override public Action GetAttackAction { get => AttackAction; }
 
     protected override void Start()
     {
@@ -40,11 +38,5 @@ public class CryptoModel : Enemy, IClapping
     public void Clap()
     {
         IsClapping = true;
-    }
-
-    override public void Attack()
-    {
-        base.Attack();
-        AttackAction?.Invoke();   
     }
 }

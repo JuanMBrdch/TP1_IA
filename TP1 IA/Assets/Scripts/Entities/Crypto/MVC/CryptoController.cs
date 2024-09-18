@@ -3,36 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class CryptoController : MonoBehaviour
+public class CryptoController : EnemyController
 {
-    FSM<EnemyStates> fsm;
-    ITreeNode actionTreeRoot;
-    LineOfSight lineOfSight;
-
-    IIdle _idle;
-    IMove _move;
-    IPatrol _patrol;
-    IAttack _attack;
     IClapping _clapping;
 
-    CryptoModel cryptoModel;
-
-    Cooldown graceTimeCooldown;
-
-    private void Awake()
+    override protected void Start()
     {
-        lineOfSight = GetComponent<LineOfSight>();
-        cryptoModel = GetComponent<CryptoModel>();
-
-        graceTimeCooldown = new Cooldown(cryptoModel.LineOfSightGraceTime);
+        base.Start();
+        model = GetComponent<CryptoModel>();
     }
 
-    void Start()
-    {
-        InitFSM();
-        InitDecisionTree();
-    }
-    void InitFSM()
+    override protected void InitFSM()
     {
         _idle = GetComponent<IIdle>();
         _move = GetComponent<IMove>();
@@ -44,8 +25,8 @@ public class CryptoController : MonoBehaviour
 
         var idle = new EnemyStateIdle(_idle, _move);
         var patrol = new EnemyStatePatrol(_idle, _move, this.transform, _patrol);
-        var pursuit = new EnemyStatePursuit(_move, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
-        var attack = new EnemyStateAttacking(_move, _attack, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
+        var pursuit = new EnemyStatePursuit(_move, this.transform, model.target.Rb, model.timePrediction);
+        var attack = new EnemyStateAttacking(_move, _attack, this.transform, model.target.Rb, model.timePrediction);
         var clap = new EnemyStateClapping(_move, _clapping); 
 
         idle.AddTransition(EnemyStates.Patrol, patrol);
@@ -76,7 +57,7 @@ public class CryptoController : MonoBehaviour
         fsm.SetInitial(idle);
     }
 
-    void InitDecisionTree()
+    override protected void InitDecisionTree()
     {
         var idle = new ActionTree(() => fsm.Transition(EnemyStates.Idle));
         var patrol = new ActionTree(() => fsm.Transition(EnemyStates.Patrol));
@@ -98,70 +79,5 @@ public class CryptoController : MonoBehaviour
     bool IAmClapping()
     {
         return _clapping.IsClapping;
-    }
-
-    bool IAmAttacking()
-    {
-        return _attack.IsAttacking;
-    }
-
-    bool IsPlayerInSight()
-    {
-        bool InSightAndInRangeAndWithinAngle =
-            lineOfSight.InView(cryptoModel.target.transform) &&
-            lineOfSight.CheckRange(cryptoModel.target.transform) &&
-            lineOfSight.CheckAngle(cryptoModel.target.transform);
-
-        if (InSightAndInRangeAndWithinAngle)
-            graceTimeCooldown.ResetCooldown();
-
-        return graceTimeCooldown.IsCooldown() || InSightAndInRangeAndWithinAngle;
-    }
-
-    bool IsPlayerAlive()
-    {
-        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
-        if (remyModel != null)
-            return remyModel.IsAlive;
-
-        return false;
-    }
-
-    bool IsPatrolTime()
-    {
-        return !_idle.IsIdleing;
-    }
-
-    bool IsPlayerBreakDancing()
-    {
-        RemyModel remyModel = cryptoModel.target.GetComponent<RemyModel>();
-        if (remyModel != null)
-            return remyModel.IsBreakDancing;
-
-        return false;
-    }
-
-    bool CanAttack()
-    {
-        return (cryptoModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
-    }
-
-    void Update()
-    {
-        fsm.OnUpdate();
-        
-        if (actionTreeRoot != null)
-        {
-            actionTreeRoot.Execute();
-        }
-        
-    }
-    void FixedUpdate()
-    {
-        fsm.OnFixedUpdate();
-    }
-    void LateUpdate()
-    {
-        fsm.OnLateUpdate();
     }
 }

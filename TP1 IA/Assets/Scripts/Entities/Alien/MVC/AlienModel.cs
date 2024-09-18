@@ -4,32 +4,22 @@ using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
-public class AlienModel : Enemy, IRunAway
+public class AlienModel : EnemyModel, IRunAway
 {
     [Header("Run Away")]
     [SerializeField] int runAwayDurationTime;
 
-    [Header("Line of sight grace time")]
-    [SerializeField] float lineOfSightGraceTime;
+    bool isRunningAway;
 
     public static Action AttackAction;
-
-    bool isRunningAway;
+    override public Action GetAttackAction { get => AttackAction; }
 
     public bool IsRunningAway { get => isRunningAway; set => isRunningAway = value; }
     public int RunAwayDuration { get => runAwayDurationTime; set => runAwayDurationTime = value; }
-    public float LineOfSightGraceTime { get => lineOfSightGraceTime; set => lineOfSightGraceTime = value; }
 
     public void RunAway()
     {
         isRunningAway = true;
-        // TODO: Implement Runaway
-    }
-
-    override public void Attack()
-    {
-        base.Attack();
-        AttackAction?.Invoke();
     }
 
     override protected void Awake()

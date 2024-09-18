@@ -4,50 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-public class AlienController : MonoBehaviour
+public class AlienController : EnemyController
 {
-    FSM<EnemyStates> fsm;
-    ITreeNode actionTreeRoot;
-    LineOfSight lineOfSight;
-
-    IIdle _idle;
-    IMove _move;
-    IPatrol _patrol;
     IRunAway _runningAway;
-    IAttack _attack;
 
-    AlienModel alienModel;
-
-    Cooldown graceTimeCooldown;
-
-    private void Awake()
+    override protected void Start()
     {
-        lineOfSight = GetComponent<LineOfSight>();
-        alienModel = GetComponent<AlienModel>();
-
-        graceTimeCooldown = new Cooldown(alienModel.LineOfSightGraceTime);
+        base.Start();
+        model = GetComponent<AlienModel>();
     }
-
-    void Start()
+    override protected void InitFSM()
     {
-        InitFSM();
-        InitDecisionTree();
-    }
-    void InitFSM()
-    {
-        _idle = GetComponent<IIdle>();
-        _move = GetComponent<IMove>();
-        _patrol = GetComponent<IPatrol>();
-        _attack = GetComponent<IAttack>();
+        base.InitFSM();
         _runningAway = GetComponent<IRunAway>();
 
         fsm = new();
 
         var idle = new EnemyStateIdle(_idle, _move);
         var patrol = new EnemyStatePatrol(_idle, _move, this.transform, _patrol);
-        var pursuit = new EnemyStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
-        var attack = new EnemyStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);
-        var runAway = new EnemyStateRunningAway(_move, _runningAway, this.transform, alienModel.target.Rb, alienModel.timePrediction);
+        var pursuit = new EnemyStatePursuit(_move, this.transform, model.target.Rb, model.timePrediction);
+        var attack = new EnemyStateAttacking(_move, _attack, this.transform, model.target.Rb, model.timePrediction);
+        var runAway = new EnemyStateRunningAway(_move, _runningAway, this.transform, model.target.Rb, model.timePrediction);
 
         idle.AddTransition(EnemyStates.Patrol, patrol);
         idle.AddTransition(EnemyStates.Pursuit, pursuit);
@@ -77,7 +54,7 @@ public class AlienController : MonoBehaviour
         fsm.SetInitial(idle);
     }
 
-    void InitDecisionTree()
+    override protected void InitDecisionTree()
     {
         var idle = new ActionTree(() => fsm.Transition(EnemyStates.Idle));
         var patrol = new ActionTree(() => fsm.Transition(EnemyStates.Patrol));
@@ -95,74 +72,8 @@ public class AlienController : MonoBehaviour
 
         actionTreeRoot = qIAmRunningAway;
     }
-    bool CanAttack()
-    {
-        return (alienModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
-    }
-    bool IsPlayerBreakDancing()
-    {
-        RemyModel remyModel = alienModel.target.GetComponent<RemyModel>();
-        if (remyModel != null)
-            return remyModel.IsBreakDancing;
-
-        return false;
-    }
-
-    bool IsPatrolTime()
-    {
-        // TODO: Implement Patrol
-        return false;
-    }
-
-    bool IsPlayerAlive()
-    {
-        RemyModel remyModel = alienModel.target.GetComponent<RemyModel>();
-        if (remyModel != null)
-            return remyModel.IsAlive;
-
-        return false;
-    }
-
-    bool IsPlayerInSight()
-    {
-        bool InSightAndInRangeAndWithinAngle = 
-            lineOfSight.InView(alienModel.target.transform) &&
-            lineOfSight.CheckRange(alienModel.target.transform) &&
-            lineOfSight.CheckAngle(alienModel.target.transform);
-
-        if (InSightAndInRangeAndWithinAngle)
-            graceTimeCooldown.ResetCooldown();
-
-        return graceTimeCooldown.IsCooldown() || InSightAndInRangeAndWithinAngle;
-    }
     bool IAmRunningAway()
     {
         return _runningAway.IsRunningAway;
-    }
-
-    bool IAmAttacking()
-    {
-        return _attack.IsAttacking;
-    }
-
-    void Update()
-    {
-        fsm.OnUpdate();
-
-        if(actionTreeRoot != null)
-        {
-            actionTreeRoot.Execute();
-        }
-
-
-        print(fsm.GetCurrent);
-    }
-    private void FixedUpdate()
-    {
-        fsm.OnFixedUpdate();
-    }
-    private void LateUpdate()
-    {
-        fsm.OnLateUpdate();
     }
 }

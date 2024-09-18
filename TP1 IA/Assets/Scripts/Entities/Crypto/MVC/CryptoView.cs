@@ -2,45 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CryptoView : MonoBehaviour
+public class CryptoView : EnemyView
 {
-    [SerializeField] Animator anim;
-    Rigidbody rb;
-
     IClapping _clapping;
-    CryptoModel cryptoModel;
 
-    void Awake()
+    override protected void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        base.Awake();
         _clapping = GetComponent<IClapping>();
-        cryptoModel = GetComponent<CryptoModel>();
+        model = GetComponent<CryptoModel>();
 
         CryptoModel.AttackAction += AttackActionHandler;
     }
-    private void OnDestroy()
+    override protected void OnDestroy()
     {
         CryptoModel.AttackAction -= AttackActionHandler;
-
     }
 
-    void Update()
+    override protected void Update()
     {
-        anim.SetFloat("Velocity", new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude);
+        base.Update();
         anim.SetBool("IsClapping", _clapping.IsClapping);
-    }
-
-    void AttackActionHandler()
-    {
-        anim.SetTrigger("DoAttack");
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (cryptoModel != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, cryptoModel.AttackRange);
-        }
     }
 }
