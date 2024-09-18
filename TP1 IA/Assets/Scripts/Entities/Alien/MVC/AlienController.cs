@@ -40,7 +40,7 @@ public class AlienController : MonoBehaviour
         var idle = new AlienStateIdle(_move);
         var patrol = new AlienStatePatrol(_move, this.transform, _patrol);
         var pursuit = new AlienStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
-        var runAway = new AlienStateRunningAway(_move, _runningAway);
+        var runAway = new AlienStateRunningAway(_move, _runningAway, this.transform, alienModel.target.Rb, alienModel.timePrediction);
         var attack = new AlienStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);
 
         idle.AddTransition(AlienStates.Patrol, patrol);
@@ -68,7 +68,7 @@ public class AlienController : MonoBehaviour
         attack.AddTransition(AlienStates.Pursuit, pursuit);
         attack.AddTransition(AlienStates.RunAway, runAway);
 
-        fsm.SetInitial(idle);
+        fsm.SetInitial(/*idle*/ runAway);
     }
 
     void InitDecisionTree()
