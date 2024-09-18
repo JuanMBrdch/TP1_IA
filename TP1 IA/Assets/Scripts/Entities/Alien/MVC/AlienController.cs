@@ -119,7 +119,33 @@ public class AlienController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(alienModel.target.transform) && lineOfSight.CheckRange(alienModel.target.transform) && lineOfSight.CheckAngle(alienModel.target.transform);
+        if (lineOfSight.InView(alienModel.target.EyeSight) &&
+            lineOfSight.CheckRange(alienModel.target.EyeSight) &&
+            lineOfSight.CheckAngle(alienModel.target.EyeSight))
+        {
+            alienModel.delayTimer = 0;
+            alienModel.canSeePLayer = true;
+            //Debug.Log("I can see you");
+            Debug.Log("InView:" + lineOfSight.InView(alienModel.target.EyeSight));
+            Debug.Log("CheckRange: " + lineOfSight.CheckRange(alienModel.target.EyeSight));
+            Debug.Log("CheckAngle: " + lineOfSight.CheckAngle(alienModel.target.EyeSight));
+            return true;
+        }
+        else if (alienModel.canSeePLayer && alienModel.delayTimer < alienModel.delayToLoosePlayer)
+        {
+            alienModel.delayTimer += Time.deltaTime;
+            Debug.Log("Detection delay");
+            return true;
+        }
+        else if (alienModel.canSeePLayer && alienModel.delayTimer > alienModel.delayToLoosePlayer)
+        {
+            alienModel.canSeePLayer = false;
+            alienModel.delayTimer = 0;
+            Debug.Log("Detection delay ended");
+            return false;
+        }
+
+        return false;
     }
 
     bool IAmAttacking()
@@ -134,7 +160,12 @@ public class AlienController : MonoBehaviour
     void Update()
     {
         fsm.OnUpdate();
-        actionTreeRoot.Execute();
+
+        if(actionTreeRoot != null)
+        {
+            actionTreeRoot.Execute();
+        }
+
 
         print(fsm.GetCurrent);
     }

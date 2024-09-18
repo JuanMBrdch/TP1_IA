@@ -11308,6 +11308,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 234797312289903595, guid: 0a04a2ca14df1ac49ae51613778c86ab, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1995771718}
+    - target: {fileID: 234797312289903595, guid: 0a04a2ca14df1ac49ae51613778c86ab, type: 3}
+      propertyPath: delayToLoosePlayer
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 7759286596031454844, guid: 0a04a2ca14df1ac49ae51613778c86ab, type: 3}
       propertyPath: m_RootOrder
       value: 1
