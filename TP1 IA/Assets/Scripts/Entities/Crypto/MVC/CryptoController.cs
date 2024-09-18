@@ -139,7 +139,12 @@ public class CryptoController : MonoBehaviour
     void Update()
     {
         fsm.OnUpdate();
-        actionTreeRoot.Execute();
+        
+        if (actionTreeRoot != null)
+        {
+            actionTreeRoot.Execute();
+        }
+        
     }
     private void FixedUpdate()
     {
