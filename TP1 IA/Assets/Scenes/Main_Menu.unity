@@ -1946,6 +1946,14 @@ PrefabInstance:
       propertyPath: testGameScene
       value: TestMap
       objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: drinks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: hearts.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7542011436882108075, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
       propertyPath: m_RootOrder
       value: 5

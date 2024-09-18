@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: RunningShoe
   m_EditorClassIdentifier: 
   _item: {fileID: 373935604466417427, guid: 4f82be835365ad64cb7b3a4a1843d992, type: 3}
-  _weight: 3
+  _weight: 30

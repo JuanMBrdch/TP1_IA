@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731749, g: 0.13414757, b: 0.1210787, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,9 +156,9 @@ RectTransform:
   m_Father: {fileID: 1718512247}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1000, y: -384}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 6, y: -207}
   m_SizeDelta: {x: 872.1062, y: 295.9688}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247735709
@@ -1446,10 +1446,10 @@ RectTransform:
   m_Father: {fileID: 1718512247}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 1003, y: 279}
-  m_SizeDelta: {x: 254.5889, y: 223.0133}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 10, y: 187}
+  m_SizeDelta: {x: 254.58887, y: 223.0133}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2063053604
 MonoBehaviour:
@@ -1659,6 +1659,14 @@ PrefabInstance:
     - target: {fileID: 7542011436882108073, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
       propertyPath: m_Name
       value: UIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: drinks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: hearts.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7542011436882108075, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
       propertyPath: m_RootOrder

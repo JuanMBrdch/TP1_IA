@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnergyDebuff
   m_EditorClassIdentifier: 
   _item: {fileID: 704854895311739863, guid: 1eec8a328165e3941a470ecbaa9f683b, type: 3}
-  _weight: 2
+  _weight: 15

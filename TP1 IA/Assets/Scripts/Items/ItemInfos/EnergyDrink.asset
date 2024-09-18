@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EnergyDrink
   m_EditorClassIdentifier: 
   _item: {fileID: 167875769779588568, guid: 95b59ac9591f62f49a43d3e718fd9551, type: 3}
-  _weight: 7
+  _weight: 25

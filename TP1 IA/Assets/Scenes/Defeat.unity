@@ -1627,7 +1627,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 910413602}
         m_TargetAssemblyTypeName: UIController, Assembly-CSharp
-        m_MethodName: NewGame
+        m_MethodName: GoToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1685,6 +1685,14 @@ PrefabInstance:
     - target: {fileID: 7542011436882108073, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
       propertyPath: m_Name
       value: UIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: drinks.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7542011436882108074, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
+      propertyPath: hearts.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7542011436882108075, guid: 8a8f9843a2a28df4aac42ae37819241e, type: 3}
       propertyPath: m_RootOrder

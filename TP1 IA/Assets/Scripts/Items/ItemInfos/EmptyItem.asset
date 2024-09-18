@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EmptyItem
   m_EditorClassIdentifier: 
   _item: {fileID: 0}
-  _weight: 15
+  _weight: 10
