@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private string victorySceneName; // Nombre de la escena de victoria
     [SerializeField] private string gameOverSceneName; // Nombre de la escena de GameOver
 
+    Cooldown goToLoseCooldown;
+
+    float goToLoseCooldownTime = 3;
+
     private void Awake()
     {
         // Verificar si ya existe una instancia
@@ -21,6 +25,12 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject); // Hacer que persista entre escenas
+
+        goToLoseCooldown = new(goToLoseCooldownTime, TriggerGameOver);
+    }
+    private void Update()
+    {
+        goToLoseCooldown.IsCooldown();
     }
 
     private void OnEnable()
@@ -35,8 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerDeath()
     {
-        // Cargar escena de GameOver
-        SceneManager.LoadScene(gameOverSceneName);
+        goToLoseCooldown.ResetCooldown();
     }
 
     public void TriggerVictory()

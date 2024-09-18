@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CryptoStatePursuit : State<CryptoStates>
+public class EnemyStatePursuit : State<EnemyStates>
 {
     IMove move;
     Pursuit pursuit;
 
-    public CryptoStatePursuit(IMove move, Transform entity, Rigidbody target, float timePrediction)
+    public EnemyStatePursuit(IMove move, Transform entity, Rigidbody target, float timePrediction)
     {
         this.move = move;
         pursuit = new(entity, target, timePrediction);
@@ -19,6 +19,5 @@ public class CryptoStatePursuit : State<CryptoStates>
 
         Vector3 pursuitDir = pursuit.GetDir();
         move.Move(pursuitDir);
-        move.Look(pursuitDir);
     }
 }

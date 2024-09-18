@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
-public class AlienStateRunningAway : State<AlienStates>
+public class EnemyStateRunningAway : State<EnemyStates>
 {
     IMove move;
     IRunAway runningAway;
@@ -10,7 +11,7 @@ public class AlienStateRunningAway : State<AlienStates>
 
     Cooldown runningAwayCooldownDuration;
 
-    public AlienStateRunningAway(IMove move, IRunAway runningAway, Transform entity, Rigidbody target, float timePrediction)
+    public EnemyStateRunningAway(IMove move, IRunAway runningAway, Transform entity, Rigidbody target, float timePrediction)
     {
         this.move = move;
         this.runningAway = runningAway;
@@ -29,7 +30,7 @@ public class AlienStateRunningAway : State<AlienStates>
         runningAwayCooldownDuration.ResetCooldown();
     }
 
-    public override void Execute()
+    public override void FixedExecute()
     {
         base.Execute();
 

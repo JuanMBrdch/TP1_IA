@@ -31,6 +31,37 @@ Transform:
   m_Father: {fileID: 9140375654458165951}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8507821549134841794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 439126093486581621}
+  m_Layer: 10
+  m_Name: CryptoEyesSight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &439126093486581621
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8507821549134841794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.96, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9140375654458165951}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8602128758440661703
 GameObject:
   m_ObjectHideFlags: 0
@@ -208,6 +239,7 @@ Transform:
   - {fileID: 8742500935181358590}
   - {fileID: 6082342530445174179}
   - {fileID: 8584153554473852929}
+  - {fileID: 439126093486581621}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -218,7 +250,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9140375654458165948}
-  m_Material: {fileID: 13400000, guid: 94d9820219818da49a9ea4bf49786ca1, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -254,11 +286,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   rotationSpeed: 6
+  eyeSight: {fileID: 439126093486581621}
   waypoints: []
+  target: {fileID: 0}
   attackRange: 5
   attackCooldown: 3
-  fireball: {fileID: 8951887438698461726, guid: 20e321679400f4c4ba132d4426fae43c, type: 3}
+  concreteAttack: {fileID: 8951887438698461726, guid: 20e321679400f4c4ba132d4426fae43c, type: 3}
   attackSpawnPoint: {fileID: 8584153554473852929}
+  radius: 0
+  angle: 0
+  personalArea: 0
+  obsMask:
+    serializedVersion: 2
+    m_Bits: 64
+  timePrediction: 0
   clappingDurationTime: 5
 --- !u!114 &6757967575222936123
 MonoBehaviour:
@@ -272,7 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04de4b33eb51ed419064b1deb6bee28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
 --- !u!114 &6946761255491863683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 10
-  pov: {fileID: 9140375654458165951}
+  pov: {fileID: 439126093486581621}
   angle: 90
   obstacle:
     serializedVersion: 2

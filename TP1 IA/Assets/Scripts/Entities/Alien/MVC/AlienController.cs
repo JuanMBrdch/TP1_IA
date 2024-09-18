@@ -6,10 +6,11 @@ using UnityEngine.UIElements;
 
 public class AlienController : MonoBehaviour
 {
-    FSM<AlienStates> fsm;
+    FSM<EnemyStates> fsm;
     ITreeNode actionTreeRoot;
     LineOfSight lineOfSight;
 
+    IIdle _idle;
     IMove _move;
     IPatrol _patrol;
     IRunAway _runningAway;
@@ -17,10 +18,14 @@ public class AlienController : MonoBehaviour
 
     AlienModel alienModel;
 
+    Cooldown graceTimeCooldown;
+
     private void Awake()
     {
         lineOfSight = GetComponent<LineOfSight>();
         alienModel = GetComponent<AlienModel>();
+
+        graceTimeCooldown = new Cooldown(alienModel.LineOfSightGraceTime);
     }
 
     void Start()
@@ -30,54 +35,55 @@ public class AlienController : MonoBehaviour
     }
     void InitFSM()
     {
+        _idle = GetComponent<IIdle>();
         _move = GetComponent<IMove>();
         _patrol = GetComponent<IPatrol>();
-        _runningAway = GetComponent<IRunAway>();
         _attack = GetComponent<IAttack>();
+        _runningAway = GetComponent<IRunAway>();
 
         fsm = new();
 
-        var idle = new AlienStateIdle(_move);
-        var patrol = new AlienStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new AlienStatePursuit(_move, this.transform, alienModel.target.transform);
-        var runAway = new AlienStateRunningAway(_move, _runningAway);
-        var attack = new AlienStateAttacking(_move, _attack, alienModel.target.transform);
+        var idle = new EnemyStateIdle(_idle, _move);
+        var patrol = new EnemyStatePatrol(_idle, _move, this.transform, _patrol);
+        var pursuit = new EnemyStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
+        var attack = new EnemyStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);
+        var runAway = new EnemyStateRunningAway(_move, _runningAway, this.transform, alienModel.target.Rb, alienModel.timePrediction);
 
-        idle.AddTransition(AlienStates.Patrol, patrol);
-        idle.AddTransition(AlienStates.Pursuit, pursuit);
-        idle.AddTransition(AlienStates.RunAway, runAway);
-        idle.AddTransition(AlienStates.Attack, attack);
+        idle.AddTransition(EnemyStates.Patrol, patrol);
+        idle.AddTransition(EnemyStates.Pursuit, pursuit);
+        idle.AddTransition(EnemyStates.RunAway, runAway);
+        idle.AddTransition(EnemyStates.Attack, attack);
 
-        patrol.AddTransition(AlienStates.Idle, idle);
-        patrol.AddTransition(AlienStates.Pursuit, pursuit);
-        patrol.AddTransition(AlienStates.RunAway, runAway);
-        patrol.AddTransition(AlienStates.Attack, attack);
+        patrol.AddTransition(EnemyStates.Idle, idle);
+        patrol.AddTransition(EnemyStates.Pursuit, pursuit);
+        patrol.AddTransition(EnemyStates.RunAway, runAway);
+        patrol.AddTransition(EnemyStates.Attack, attack);
 
-        pursuit.AddTransition(AlienStates.Idle, idle);
-        pursuit.AddTransition(AlienStates.Patrol, patrol);
-        pursuit.AddTransition(AlienStates.RunAway, runAway);
-        pursuit.AddTransition(AlienStates.Attack, attack);
+        pursuit.AddTransition(EnemyStates.Idle, idle);
+        pursuit.AddTransition(EnemyStates.Patrol, patrol);
+        pursuit.AddTransition(EnemyStates.RunAway, runAway);
+        pursuit.AddTransition(EnemyStates.Attack, attack);
 
-        runAway.AddTransition(AlienStates.Idle, idle);
-        runAway.AddTransition(AlienStates.Patrol, patrol);
-        runAway.AddTransition(AlienStates.Pursuit, pursuit);
-        runAway.AddTransition(AlienStates.Attack, attack);
+        runAway.AddTransition(EnemyStates.Idle, idle);
+        runAway.AddTransition(EnemyStates.Patrol, patrol);
+        runAway.AddTransition(EnemyStates.Pursuit, pursuit);
+        runAway.AddTransition(EnemyStates.Attack, attack);
 
-        attack.AddTransition(AlienStates.Idle, idle);
-        attack.AddTransition(AlienStates.Patrol, patrol);
-        attack.AddTransition(AlienStates.Pursuit, pursuit);
-        attack.AddTransition(AlienStates.RunAway, runAway);
+        attack.AddTransition(EnemyStates.Idle, idle);
+        attack.AddTransition(EnemyStates.Patrol, patrol);
+        attack.AddTransition(EnemyStates.Pursuit, pursuit);
+        attack.AddTransition(EnemyStates.RunAway, runAway);
 
         fsm.SetInitial(idle);
     }
 
     void InitDecisionTree()
     {
-        var idle = new ActionTree(() => fsm.Transition(AlienStates.Idle));
-        var patrol = new ActionTree(() => fsm.Transition(AlienStates.Patrol));
-        var pursuit = new ActionTree(() => fsm.Transition(AlienStates.Pursuit));
-        var attack = new ActionTree(() => fsm.Transition(AlienStates.Attack));
-        var runningAway = new ActionTree(() => fsm.Transition(AlienStates.RunAway));
+        var idle = new ActionTree(() => fsm.Transition(EnemyStates.Idle));
+        var patrol = new ActionTree(() => fsm.Transition(EnemyStates.Patrol));
+        var pursuit = new ActionTree(() => fsm.Transition(EnemyStates.Pursuit));
+        var attack = new ActionTree(() => fsm.Transition(EnemyStates.Attack));
+        var runningAway = new ActionTree(() => fsm.Transition(EnemyStates.RunAway));
 
         var qCanAttack = new QuestionTree(CanAttack, attack, pursuit);
         var qPlayerBreakDancing = new QuestionTree(IsPlayerBreakDancing, runningAway, qCanAttack);
@@ -91,7 +97,7 @@ public class AlienController : MonoBehaviour
     }
     bool CanAttack()
     {
-        return (alienModel.target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (alienModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
     }
     bool IsPlayerBreakDancing()
     {
@@ -119,22 +125,37 @@ public class AlienController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(alienModel.target.transform) && lineOfSight.CheckRange(alienModel.target.transform) && lineOfSight.CheckAngle(alienModel.target.transform);
-    }
+        bool InSightAndInRangeAndWithinAngle = 
+            lineOfSight.InView(alienModel.target.transform) &&
+            lineOfSight.CheckRange(alienModel.target.transform) &&
+            lineOfSight.CheckAngle(alienModel.target.transform);
 
-    bool IAmAttacking()
-    {
-        return _attack.IsAttacking;
+        if (InSightAndInRangeAndWithinAngle)
+            graceTimeCooldown.ResetCooldown();
+
+        return graceTimeCooldown.IsCooldown() || InSightAndInRangeAndWithinAngle;
     }
     bool IAmRunningAway()
     {
         return _runningAway.IsRunningAway;
     }
 
+    bool IAmAttacking()
+    {
+        return _attack.IsAttacking;
+    }
+
     void Update()
     {
         fsm.OnUpdate();
-        actionTreeRoot.Execute();
+
+        if(actionTreeRoot != null)
+        {
+            actionTreeRoot.Execute();
+        }
+
+
+        print(fsm.GetCurrent);
     }
     private void FixedUpdate()
     {

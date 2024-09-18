@@ -1,20 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
-
-public class CryptoStateAttacking : State<CryptoStates>
+public class EnemyStateAttacking : State<EnemyStates>
 {
     IMove move;
     IAttack attack;
 
     Cooldown attackCooldown;
-    
+
     Pursuit pursuit;
 
-    public CryptoStateAttacking(IMove move, IAttack attack, Transform entity, Rigidbody target, float timePrediction)
+    public EnemyStateAttacking(IMove move, IAttack attack, Transform entity, Rigidbody target, float timePrediction)
     {
         this.move = move;
         this.attack = attack;
@@ -44,5 +41,10 @@ public class CryptoStateAttacking : State<CryptoStates>
     {
         attack.Attack();
         attackCooldown.ResetCooldown();
+    }
+
+    override public void Exit()
+    {
+        attack.IsAttacking = false;
     }
 }
