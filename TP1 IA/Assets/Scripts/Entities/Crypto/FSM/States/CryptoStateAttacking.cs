@@ -4,22 +4,23 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CryptoStateAttacking : State<CryptoStates>
 {
-    Transform target;
-
     IMove move;
     IAttack attack;
 
     Cooldown attackCooldown;
+    
+    Pursuit pursuit;
 
-    public CryptoStateAttacking(IMove move, IAttack attack, Transform target)
+    public CryptoStateAttacking(IMove move, IAttack attack, Transform entity, Rigidbody target, float timePrediction)
     {
         this.move = move;
         this.attack = attack;
-        this.target = target;
 
         attackCooldown = new Cooldown(attack.AttackCooldown);
+        pursuit = new(entity, target, timePrediction * .5f);
     }
     public override void Enter()
     {
@@ -31,7 +32,9 @@ public class CryptoStateAttacking : State<CryptoStates>
     public override void FixedExecute()
     {
         base.FixedExecute();
-        move.Look(target);
+
+        Vector3 pursuitDir = pursuit.GetDir();
+        move.Look(pursuitDir);
 
         if (!attack.IsAttacking && !attackCooldown.IsCooldown()) // Si estoy atacando, y ya terminé de atacar, vuelvo a atacar
             Attack();

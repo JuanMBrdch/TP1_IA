@@ -5,10 +5,6 @@ using UnityEngine;
 
 public class CryptoModel : Enemy, IClapping
 {
-    [Header("Attack")]
-    [SerializeField] GameObject fireball;
-    [SerializeField] Transform attackSpawnPoint;
-
     [Header("Clapping")]
     [SerializeField] int clappingDurationTime;
 
@@ -50,11 +46,5 @@ public class CryptoModel : Enemy, IClapping
     {
         base.Attack();
         AttackAction?.Invoke();   
-    }
-
-    override protected void ConcreteAttackActionHandler()
-    {
-        GameObject newFireball = Instantiate(fireball, attackSpawnPoint.position, Quaternion.identity);
-        newFireball.GetComponent<Attack>().Direction = transform.forward;
     }
 }

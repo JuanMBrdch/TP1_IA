@@ -107,7 +107,6 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Die()
     {
         DieAction?.Invoke();
-        GameManager.Instance.TriggerGameOver();
     }
 
     public bool IsDead()
@@ -118,7 +117,7 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     public void Jump()
     {
         IsJumping = true;
-        rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
+        Rb.AddForce(Vector3.up * 6, ForceMode.Impulse);
         JumpAction?.Invoke();
     }
 

@@ -39,9 +39,9 @@ public class AlienController : MonoBehaviour
 
         var idle = new AlienStateIdle(_move);
         var patrol = new AlienStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new AlienStatePursuit(_move, this.transform, alienModel.target.transform);
+        var pursuit = new AlienStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
         var runAway = new AlienStateRunningAway(_move, _runningAway);
-        var attack = new AlienStateAttacking(_move, _attack, alienModel.target.transform);
+        var attack = new AlienStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);
 
         idle.AddTransition(AlienStates.Patrol, patrol);
         idle.AddTransition(AlienStates.Pursuit, pursuit);
@@ -91,7 +91,7 @@ public class AlienController : MonoBehaviour
     }
     bool CanAttack()
     {
-        return (alienModel.target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (alienModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
     }
     bool IsPlayerBreakDancing()
     {
@@ -135,6 +135,8 @@ public class AlienController : MonoBehaviour
     {
         fsm.OnUpdate();
         actionTreeRoot.Execute();
+
+        print(fsm.GetCurrent);
     }
     private void FixedUpdate()
     {

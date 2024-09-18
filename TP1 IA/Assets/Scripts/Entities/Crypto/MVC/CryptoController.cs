@@ -5,18 +5,14 @@ using UnityEngine.UIElements;
 
 public class CryptoController : MonoBehaviour
 {
-    [SerializeField] float idleTime;
-
-    LineOfSight lineOfSight;
-
     FSM<CryptoStates> fsm;
     ITreeNode actionTreeRoot;
+    LineOfSight lineOfSight;
 
     IMove _move;
     IPatrol _patrol;
-    IClapping _clapping;
     IAttack _attack;
-    IIdle _idle;
+    IClapping _clapping;
 
     CryptoModel cryptoModel;
 
@@ -31,22 +27,20 @@ public class CryptoController : MonoBehaviour
         InitFSM();
         InitDecisionTree();
     }
-    
     void InitFSM()
     {
         _move = GetComponent<IMove>();
         _patrol = GetComponent<IPatrol>();
-        _clapping = GetComponent<IClapping>();
         _attack = GetComponent<IAttack>();
-        _idle = GetComponent<IIdle>();
+        _clapping = GetComponent<IClapping>();
 
         fsm = new();
 
-        var idle = new CryptoStateIdle(_move, _idle, idleTime);
+        var idle = new CryptoStateIdle(_move);
         var patrol = new CryptoStatePatrol(_move, this.transform, _patrol);
-        var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target, cryptoModel.timePrediction);
+        var pursuit = new CryptoStatePursuit(_move, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
+        var attack = new CryptoStateAttacking(_move, _attack, this.transform, cryptoModel.target.Rb, cryptoModel.timePrediction);
         var clap = new CryptoStateClapping(_move, _clapping);   
-        var attack = new CryptoStateAttacking(_move, _attack, cryptoModel.target.transform);
 
         idle.AddTransition(CryptoStates.Patrol, patrol);
         idle.AddTransition(CryptoStates.Pursuit, pursuit);
@@ -107,7 +101,10 @@ public class CryptoController : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        return lineOfSight.InView(cryptoModel.target.transform) && lineOfSight.CheckRange(cryptoModel.target.transform) && lineOfSight.CheckAngle(cryptoModel.target.transform);
+        return 
+            lineOfSight.InView(cryptoModel.target.EyeSight) && 
+            lineOfSight.CheckRange(cryptoModel.target.EyeSight) &&
+            lineOfSight.CheckAngle(cryptoModel.target.EyeSight);
     }
 
     bool IsPlayerAlive()
@@ -121,15 +118,7 @@ public class CryptoController : MonoBehaviour
 
     bool IsPatrolTime()
     {
-        if (!_patrol.patrolFinished)
-        {
-            return true;
-        }
-        if(_idle.IdleFinished)
-        {
-            return true;
-        }
-
+        // TODO: Implement Patrol
         return false;
     }
 
@@ -144,7 +133,7 @@ public class CryptoController : MonoBehaviour
 
     bool CanAttack()
     {
-        return (cryptoModel.target.position - transform.position).magnitude <= _attack.AttackRange;
+        return (cryptoModel.target.transform.position - transform.position).magnitude <= _attack.AttackRange;
     }
 
     void Update()
