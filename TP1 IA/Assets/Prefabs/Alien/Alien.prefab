@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7014692048236514708}
   m_Layer: 10
-  m_Name: EyesSight
+  m_Name: AlienEyesSight
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -23,8 +23,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683849449769478422}
-  m_LocalRotation: {x: -0, y: 0.26499015, z: -0, w: -0.9642511}
-  m_LocalPosition: {x: 0, y: 3.84, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.96, z: 0.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

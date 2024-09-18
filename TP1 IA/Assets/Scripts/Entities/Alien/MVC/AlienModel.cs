@@ -9,12 +9,16 @@ public class AlienModel : Enemy, IRunAway
     [Header("Run Away")]
     [SerializeField] int runAwayDurationTime;
 
+    [Header("Line of sight grace time")]
+    [SerializeField] float lineOfSightGraceTime;
+
     public static Action AttackAction;
 
     bool isRunningAway;
 
     public bool IsRunningAway { get => isRunningAway; set => isRunningAway = value; }
     public int RunAwayDuration { get => runAwayDurationTime; set => runAwayDurationTime = value; }
+    public float LineOfSightGraceTime { get => lineOfSightGraceTime; set => lineOfSightGraceTime = value; }
 
     public void RunAway()
     {

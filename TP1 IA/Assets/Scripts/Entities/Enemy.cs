@@ -50,8 +50,8 @@ public abstract class Enemy : Entity, IPatrol, IAttack
     {
         Vector3 obsDir = _obs.GetDir(dir, false);
         obsDir.y = 0;
-        dir.y = 0;
         base.Move(obsDir);
+        Look(obsDir);
     }
     
     public virtual void Attack()
@@ -59,9 +59,8 @@ public abstract class Enemy : Entity, IPatrol, IAttack
         IsAttacking = true;
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
         IsAttacking = false;
     }
 }

@@ -44,10 +44,8 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
     {
         IsJumping = false;
     }
-    protected override void Start()
+    protected void Start()
     {
-        base.Start();
-
         IsBreakDancing = false;
         IsJumping = false;
 

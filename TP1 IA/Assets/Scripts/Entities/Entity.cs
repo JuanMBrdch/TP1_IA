@@ -21,10 +21,6 @@ public abstract class Entity : MonoBehaviour, IMove
     {
         Rb = GetComponent<Rigidbody>();
     }
-    protected virtual void Start()
-    {
-        // rb = GetComponent<Rigidbody>();
-    }
 
     public virtual void Move(Vector3 dir)
     {
@@ -34,11 +30,13 @@ public abstract class Entity : MonoBehaviour, IMove
     }
     public void Look(Vector3 dir)
     {
+        dir.y = 0;
         transform.forward = Vector3.RotateTowards(transform.forward, dir, Time.deltaTime * rotationSpeed, 0);
     }
     public void Look(Transform target)
     {
         Vector3 dir = target.position - transform.position;
+        dir.y = 0;
         Look(dir);
     }
 }

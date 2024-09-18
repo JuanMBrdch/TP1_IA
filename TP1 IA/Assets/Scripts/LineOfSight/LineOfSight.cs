@@ -43,7 +43,6 @@ public class LineOfSight : MonoBehaviour
             else return pov.forward;
         }
     }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;

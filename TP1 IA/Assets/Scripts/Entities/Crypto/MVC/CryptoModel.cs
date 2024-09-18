@@ -7,16 +7,16 @@ public class CryptoModel : Enemy, IClapping
 {
     [Header("Clapping")]
     [SerializeField] int clappingDurationTime;
+    
+    [Header("Line of sight grace time")]
+    [SerializeField] float lineOfSightGraceTime;
 
     bool isClapping;
 
     public static Action AttackAction;
-    public bool IsClapping
-    {
-        get => isClapping;
-        set => isClapping = value;
-    }
+    public bool IsClapping { get => isClapping; set => isClapping = value; }
     public int ClappingDuration { get => clappingDurationTime; set => clappingDurationTime = value; }
+    public float LineOfSightGraceTime { get => lineOfSightGraceTime; set => lineOfSightGraceTime = value; }
 
     protected override void Start()
     {
