@@ -8,11 +8,11 @@ public class CryptoStateIdle : State<CryptoStates>
     IIdle idle;
     private float _idleTime;
     private float _currentIdleTime;
-    public CryptoStateIdle(IMove move, IIdle idle ,float duration)
+    public CryptoStateIdle(IMove move /*, IIdle idle ,float duration*/)
     {
         this.move = move;
-        this.idle = idle;
-        this._idleTime = duration;
+        //this.idle = idle;
+        //this._idleTime = duration;
     }
 
     public override void Enter()
