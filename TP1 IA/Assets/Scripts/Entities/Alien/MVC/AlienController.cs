@@ -43,11 +43,11 @@ public class AlienController : MonoBehaviour
 
         fsm = new();
 
-        var idle = new EnemyStateIdle(_idle, _move);
+        var idle = new EnemyStateIdle(_move);
         var patrol = new EnemyStatePatrol(_move, this.transform, _patrol);
         var pursuit = new EnemyStatePursuit(_move, this.transform, alienModel.target.Rb, alienModel.timePrediction);
         var attack = new EnemyStateAttacking(_move, _attack, this.transform, alienModel.target.Rb, alienModel.timePrediction);
-        var runAway = new EnemyStateRunningAway(_move, _runningAway);
+        var runAway = new EnemyStateRunningAway(_move, _runningAway, this.transform, alienModel.target.Rb, alienModel.timePrediction);
 
         idle.AddTransition(EnemyStates.Patrol, patrol);
         idle.AddTransition(EnemyStates.Pursuit, pursuit);
@@ -148,7 +148,12 @@ public class AlienController : MonoBehaviour
     void Update()
     {
         fsm.OnUpdate();
-        actionTreeRoot.Execute();
+
+        if(actionTreeRoot != null)
+        {
+            actionTreeRoot.Execute();
+        }
+
 
         print(fsm.GetCurrent);
     }

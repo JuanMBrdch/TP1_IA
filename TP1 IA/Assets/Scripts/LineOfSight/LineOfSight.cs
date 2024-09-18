@@ -8,6 +8,7 @@ public class LineOfSight : MonoBehaviour
     [SerializeField] private Transform pov;
     [SerializeField] private float angle;
     [SerializeField] private LayerMask obstacle;
+    //[SerializeField] private float delayToLooseTarget;
 
     public bool CheckRange(Transform target)
     {

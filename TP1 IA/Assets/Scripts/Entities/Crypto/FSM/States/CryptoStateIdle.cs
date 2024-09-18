@@ -18,22 +18,22 @@ public class CryptoStateIdle : State<CryptoStates>
     public override void Enter()
     {
         base.Enter();
-        _currentIdleTime = 0;
-        idle.IdleFinished = false;
+        //_currentIdleTime = 0;
+        //idle.IdleFinished = false;
         move.Move(Vector3.zero);
     }
 
     public override void Execute()
     {
         base.Execute();
-        if(_currentIdleTime < _idleTime)
-        {
-            _currentIdleTime += Time.deltaTime;
-        }
-        else
-        {
-            idle.IdleFinished = true;
-        }
-        Debug.Log("Idle");
+        //if(_currentIdleTime < _idleTime)
+        //{
+        //    _currentIdleTime += Time.deltaTime;
+        //}
+        //else
+        //{
+        //    idle.IdleFinished = true;
+        //}
+        //Debug.Log("Idle");
     }
 }
