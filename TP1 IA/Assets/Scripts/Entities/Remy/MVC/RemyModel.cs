@@ -59,10 +59,12 @@ public class RemyModel : Entity, IJump, IBreakDancing, IDead
 
     void Update()
     {
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.M))
         {
             ChangeLife(-1);
         }
+#endif
     }
 
     public bool IsAlive
